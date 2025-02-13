@@ -40,6 +40,7 @@
                     <li class="nav-item"><a class="nav-link text-white" href="cart.html">Cart</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="account.html">Account</a></li>
                 </ul>
+                <h1>Banj98j78dh78a</h1>
             </div>
         </div>
     </nav>   
