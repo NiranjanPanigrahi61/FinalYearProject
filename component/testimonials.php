@@ -31,7 +31,7 @@
 
 <body>
     <div class="container mt-5 text-center">
-        <h2 class="mb-4">The latest Google testimonials at a glance.</h2>
+        <h2 class="mb-4 " style="color:#D02964;">The latest Google testimonials at a glance.</h2>
         <div class="testimonial-container">
             <div class="row row-cols-1 row-cols-md-3 g-4">
 
