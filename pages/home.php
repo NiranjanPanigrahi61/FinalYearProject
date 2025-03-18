@@ -1,5 +1,6 @@
 <?php
-include_once "../final_year_project/user_nav.php";
-include_once "../final_year_project/corosol.php";
-include_once "../final_year_project/footer.php";
+include_once "../component/user_nav.php";
+include_once "../component/corosol.php";
+include_once "../component/WhyChooseUs.php";
+include_once "../component/footer.php";
 ?>
