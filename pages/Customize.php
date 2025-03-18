@@ -1,3 +1,7 @@
+<?php
+include_once "../component/user_nav.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -351,4 +355,8 @@
     </script>
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
+
+<?php
+include_once "../component/footer.php";
+?>
 </html>
