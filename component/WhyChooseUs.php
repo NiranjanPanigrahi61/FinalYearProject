@@ -83,7 +83,7 @@
                             <div class="card w-100 custom-card-2">
                                 <div class="card-body text-end">
                                     <h5 class="card-title">Wide Variety of Treats</h5>
-                                    <p class="card-text">🍩 Indulge in our selection of bread, cookies, cupcakes, muffins,and more for everyone!</p>
+                                    <p class="card-text">🍩 Indulge in our selection of bread, cookies, cupcakes, muffins, and more something for everyone!</p>
                                 </div>
                             </div>
                         </div>

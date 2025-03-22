@@ -10,8 +10,8 @@ include_once "./../config.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
-    <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
+    <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark p-3" style="background-color: #D02964"> <!--#331E36; #D67398-->
@@ -29,8 +29,13 @@ include_once "./../config.php";
             <div class="collapse navbar-collapse justify-content-between p-3 p-lg-0" id="navbarNav"  style="background-color: #D02964;">
             <!-- Middle Navigation -->
                 <ul class="navbar-nav mx-auto d-flex flex-lg-row flex-column align-items-center text-center gap-lg-4 fs-4">
+<<<<<<< HEAD
                     <li class="nav-item"><a class="nav-link text-white" href="<?= BASE_URL ?>pages/home.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="<?= BASE_URL ?>pages/Customize.php">Customized Cake</a></li>
+=======
+                    <li class="nav-item"><a class="nav-link text-white" href="../pages/home.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="../pages/customize.php">Customized Cake</a></li>
+>>>>>>> faf832cb625d861fc5b4136defa4b7ae694df9db
                     <li class="nav-item"><a class="nav-link text-white" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact Us</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="feedback.html">Feedback</a></li>
@@ -39,7 +44,11 @@ include_once "./../config.php";
                <!-- Right Navigation -->
                 <ul class="navbar-nav d-flex flex-lg-row flex-column align-items-center text-center gap-lg-3 fs-4">
                     <li class="nav-item"><a class="nav-link text-white" href="cart.html">Cart</a></li>
+<<<<<<< HEAD
                     <li class="nav-item"><a class="nav-link text-white" href="<?= BASE_URL ?>pages/UserLogin.php">Account</a></li>
+=======
+                    <li class="nav-item"><a class="nav-link text-white" href="user/user.php">Account</a></li>
+>>>>>>> faf832cb625d861fc5b4136defa4b7ae694df9db
                 </ul>
             </div>
         </div>

@@ -193,8 +193,8 @@ include_once "../component/user_nav.php";
                   </div>
             </div>
         </div>
-        <h3 class="border custom-shadow rounded p-3 ps-3 mt-4 mb-4 d-none" id="oderDetailsHead">Your Choice</h3>
         <div class="row gy-4 mt-md-4 d-none" id="orderDetails">
+            <h3 class="border custom-shadow rounded p-3 ps-3 mt-4 mb-4"">Your Choice</h3>
             <div class="col-md-6" id="resCol-1">
                 <!-- img -->
             </div>
@@ -209,20 +209,20 @@ include_once "../component/user_nav.php";
                 <div class="row">
                     <div class="col-md-6">
                         <!-- price -->
-                        <p id="price"></p>
+                        <p></p>
                     </div>
                     <div class="col-md-6">
                         <!-- delivery Time -->
                         <p>Delivered By</p>
-                        <p id="deliveryTime"></p>
+                        <p></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <button class="btn text-white d-block mx-auto p-3 w-50 mt-4" style="background-color: #FC8F59;" id="cancleBtn">Cancle</button>
+                        <button class="btn text-white d-block mx-auto p-3 w-50 mt-4" style="background-color: #FC8F59;">Cancle</button>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn text-white d-block mx-auto p-3 w-50 mt-4" style="background-color: #E33F5C;" id="confirmBtn">Order</button>
+                        <button class="btn text-white d-block mx-auto p-3 w-50 mt-4" style="background-color: #E33F5C;">Order</button>
                     </div>
                 </div>
             </div>
@@ -251,24 +251,22 @@ include_once "../component/user_nav.php";
             let activeCards=document.querySelectorAll(".active-card")
             let message=document.querySelector("#messageBox")
             let instruction=document.querySelector("#instructionBox")
-            let orderDetailsHead=document.querySelector("#oderDetailsHead")
             
             let orederDiv=document.querySelector("#orderDetails")
             let tbody=document.querySelector("tbody")
             let finalBtn=document.querySelector("#final")
 
-            let deliveryTime=document.querySelector("#deliveryTime")
-            let price=document.querySelector("#price")
-
             let date = new Date();
             let hours = date.getHours();
             let minutes = date.getMinutes();
-            
+            let ampm = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12 || 12;
 
             if (activeCards.length<4){
                 return
             }else{
                 activeCards.forEach((c)=>{
+                    console.log(c.textContent.trim());
                     let row=document.createElement("tr")
                     let td=document.createElement("td")
                     td.textContent=c.textContent.trim()
@@ -287,11 +285,14 @@ include_once "../component/user_nav.php";
                     }
                 })
                 
+                now.toLocaleTimeString(); // Example output: "2:45:30 PM"
+
 
                 if(message.value==="" && instruction.value===""){
                     message.readOnly=true
                     instruction.readOnly=true
                 }else{
+
 
                     message.readOnly=true
                     instruction.readOnly=true
@@ -308,55 +309,15 @@ include_once "../component/user_nav.php";
                     tbody.appendChild(rowInstruction)
                 }
 
-                let ampm = hours >= 12 ? "PM" : "AM";
-                hours = hours % 12 || 12;
-                
-                deliveryTime.textContent=`${hours}:${String(minutes).padStart(2, '0')} ${ampm}`;
-
                 orederDiv.classList.remove("d-none")
-                orderDetailsHead.classList.remove("d-none")
                 finalBtn.classList.add("d-none")
 
 
             }
-        })
-
-        document.getElementById("cancleBtn").addEventListener("click",()=>{
-            let activeCards=document.querySelectorAll(".active-card")
-            let message=document.querySelector("#messageBox")
-            let instruction=document.querySelector("#instructionBox")
-            let orderDetailsHead=document.querySelector("#oderDetailsHead")
-            
-            let orederDiv=document.querySelector("#orderDetails")
-            let tbody=document.querySelector("tbody")
-            let finalBtn=document.querySelector("#final")
-
-            let deliveryTime=document.querySelector("#deliveryTime")
-            let price=document.querySelector("#price")
-
-        
-            activeCards.length=0
-            message.value=""
-            instruction.value=""
-            message.readOnly=false
-            instruction.readOnly=false
-            tbody.innerHTML=""
-            deliveryTime.textContent=""
-            price.textContent=""
-            orederDiv.classList.add("d-none")
-            orderDetailsHead.classList.add("d-none")
-            finalBtn.classList.remove("d-none")
-        })
 
 
-        document.getElementById("confirmBtn").addEventListener("click",()=>{
-        // on order confirm    
         })
     </script>
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
-
-<?php
-include_once "../component/footer.php";
-?>
 </html>

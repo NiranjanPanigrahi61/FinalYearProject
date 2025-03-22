@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 <footer class="text-white pt-4 " style="background-color: #D02964">
         <div class="container ">
+=======
+<footer class="text-white pt-4 mt-4 " style="background-color: #E4007C">
+        <div class="containerc">
+>>>>>>> faf832cb625d861fc5b4136defa4b7ae694df9db
             <div class="row">
                 <!-- Quick Links -->
                 <div class="col-md-4 text-center">
