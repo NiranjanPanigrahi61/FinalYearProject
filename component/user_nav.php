@@ -9,8 +9,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
-    <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
+    <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark p-3" style="background-color: #E4007C"> <!--#331E36; #D67398-->
@@ -29,7 +29,7 @@
             <!-- Middle Navigation -->
                 <ul class="navbar-nav mx-auto d-flex flex-lg-row flex-column align-items-center text-center gap-lg-4 fs-4">
                     <li class="nav-item"><a class="nav-link text-white" href="../final_year_project/home.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="customized-cake.html">Customized Cake</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="customize.php">Customized Cake</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact Us</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="feedback.html">Feedback</a></li>
@@ -38,7 +38,7 @@
                <!-- Right Navigation -->
                 <ul class="navbar-nav d-flex flex-lg-row flex-column align-items-center text-center gap-lg-3 fs-4">
                     <li class="nav-item"><a class="nav-link text-white" href="cart.html">Cart</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="account.html">Account</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="user/user.php">Account</a></li>
                 </ul>
             </div>
         </div>

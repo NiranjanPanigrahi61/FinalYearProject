@@ -1,4 +1,4 @@
-<footer class="text-white pt-4" style="background-color: #E4007C">
+<footer class="text-white pt-4 mt-4" style="background-color: #E4007C ">
         <div class="container">
             <div class="row">
                 <!-- Quick Links -->

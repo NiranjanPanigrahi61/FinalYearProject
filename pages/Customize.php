@@ -1,3 +1,6 @@
+<?php
+include_once "../component/user_nav.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
