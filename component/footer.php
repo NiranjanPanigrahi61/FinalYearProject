@@ -1,5 +1,5 @@
-<footer class="text-white pt-4 mt-4" style="background-color: #E4007C ">
-        <div class="container">
+<footer class="text-white pt-4 mt-4 " style="background-color: #E4007C">
+        <div class="containerc">
             <div class="row">
                 <!-- Quick Links -->
                 <div class="col-md-4 text-center">
