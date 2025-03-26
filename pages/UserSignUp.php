@@ -62,11 +62,7 @@ include_once "./../component/user_nav.php";
         <div class="container p-5">
             <div class="signup-container">
                 <div class="form-section">
-                    <h2 class="text-center">Create User Account</h2>
-                    <button class="btn btn-danger btn-social">Sign up with Google</button>
-                    <button class="btn btn-primary btn-social">Sign up with Facebook</button>
-                    <p class="text-center">- OR -</p>
-                    
+                    <h2 class="text-center">Create an Account</h2>                    
                     <!-- User Signup Form -->
                     <form id="signupForm">
                         <div class="mb-3">
