@@ -1,3 +1,6 @@
+<?php
+include_once "../config.php";
+?>
 
 <footer class="text-white pt-4 " style="background-color: #D02964">
         <div class="container ">
@@ -6,7 +9,7 @@
                 <div class="col-md-4 text-center">
                     <h5 class="fs-3">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white text-decoration-none">Admin</a></li>
+                        <li><a href="<?=BASE_URL?>/pages/Admin/AdminLogin.php" class="text-white text-decoration-none">Admin</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Customized Cake</a></li>
                         <li><a href="#" class="text-white text-decoration-none">About</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Contact</a></li>

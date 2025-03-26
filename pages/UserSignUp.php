@@ -25,6 +25,10 @@ include_once "./../component/user_nav.php";
             padding: 40px;
             width: 50%;
         }
+        .form-control:focus {
+            border-color: #D02964;
+            box-shadow: 0 0 5px rgba(242, 11, 92, 0.5);
+        }
         .info-section {
             width: 50%;
             background: #FC8F59;
