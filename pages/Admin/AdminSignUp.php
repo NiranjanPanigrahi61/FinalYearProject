@@ -48,17 +48,17 @@
                         <form id="signupForm">
                             <div class="mb-3">
                                 <label class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
                                 <div class="error" id="usernameError"></div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
                                 <div class="error" id="emailError"></div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
                                 <div class="error" id="passwordError"></div>
                             </div>
                             <div class="mb-3">
@@ -91,29 +91,29 @@
         document.getElementById("signupForm").addEventListener("submit", function(event) {
             event.preventDefault();
             
-            var username = document.getElementById("username").value;
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirmPassword").value;
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
             
-            var usernameError = document.getElementById("usernameError");
-            var emailError = document.getElementById("emailError");
-            var passwordError = document.getElementById("passwordError");
-            var confirmPasswordError = document.getElementById("confirmPasswordError");
+            let usernameError = document.getElementById("usernameError");
+            let emailError = document.getElementById("emailError");
+            let passwordError = document.getElementById("passwordError");
+            let confirmPasswordError = document.getElementById("confirmPasswordError");
             
             usernameError.textContent = "";
             emailError.textContent = "";
             passwordError.textContent = "";
             confirmPasswordError.textContent = "";
             
-            var valid = true;
+            let valid = true;
             
             if (username.trim() === "") {
                 usernameError.textContent = "Username is required.";
                 valid = false;
             }
             
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let emailPattern = /^[a-zA-Z0-9_.]{3,}@[a-zA-Z.]{3,12}.[a-zA-Z]{2,5}$/;
             if (!emailPattern.test(email)) {
                 emailError.textContent = "Enter a valid email address.";
                 valid = false;
@@ -131,7 +131,7 @@
             
             if (!valid) return;
             
-            var formData = new FormData();
+            let formData = new FormData();
             formData.append("username", username);
             formData.append("email", email);
             formData.append("password", password);
@@ -157,29 +157,29 @@
         document.getElementById("signupForm").addEventListener("submit", function(event) {
             event.preventDefault();
             
-            var username = document.getElementById("username").value;
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirmPassword").value;
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
             
-            var usernameError = document.getElementById("usernameError");
-            var emailError = document.getElementById("emailError");
-            var passwordError = document.getElementById("passwordError");
-            var confirmPasswordError = document.getElementById("confirmPasswordError");
+            let usernameError = document.getElementById("usernameError");
+            let emailError = document.getElementById("emailError");
+            let passwordError = document.getElementById("passwordError");
+            let confirmPasswordError = document.getElementById("confirmPasswordError");
             
             usernameError.textContent = "";
             emailError.textContent = "";
             passwordError.textContent = "";
             confirmPasswordError.textContent = "";
             
-            var valid = true;
+            let valid = true;
             
             if (username.trim() === "") {
                 usernameError.textContent = "Username is required.";
                 valid = false;
             }
             
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
                 emailError.textContent = "Enter a valid email address.";
                 valid = false;
@@ -197,7 +197,7 @@
             
             if (!valid) return;
             
-            var formData = new FormData();
+            let formData = new FormData();
             formData.append("username", username);
             formData.append("email", email);
             formData.append("password", password);
