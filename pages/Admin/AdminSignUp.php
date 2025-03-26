@@ -13,11 +13,7 @@
             border-color: #D02964;
             box-shadow: 0 0 5px rgba(242, 11, 92, 0.5);
         }
-        .btn-success {
-            background-color: #E33F5C;
-            border: none;
-        }
-        .btn-success:hover {
+        .btn:hover {
             background-color: #ED555A;
         }
         .error {
@@ -70,7 +66,7 @@
                                 <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
                                 <div class="error" id="confirmPasswordError"></div>
                             </div>
-                            <button type="submit" class="btn btn-success w-100">Create Admin</button>
+                            <button type="submit" class="btn text-white w-100" style="background-color: #E33F5C;">Create Admin</button>
                             <div class="text-center mt-3">
                                 <span>Already have an account? </span>
                                 <a href="./AdminLogin.php" class="text-danger text-decoration-none">Sign In</a>
