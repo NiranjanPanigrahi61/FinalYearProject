@@ -11,7 +11,7 @@ include_once "./../config.php";
     <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+    <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
     <style>
         /* Increase size of nav items */
         .nav-item {
@@ -78,7 +78,7 @@ include_once "./../config.php";
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="contact.html">
+                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>component/contactus.php">
                             <i class="fa-solid fa-phone"></i> Contact Us
                         </a>
                     </li>
@@ -104,6 +104,6 @@ include_once "./../config.php";
             </div>
         </div>
     </nav>
+    <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
