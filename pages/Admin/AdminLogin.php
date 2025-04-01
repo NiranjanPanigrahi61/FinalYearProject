@@ -56,21 +56,15 @@
                                     <div class="text-end mb-3">
                                         <a href="#" style="color: #D02964;">Forgot password?</a>
                                     </div>
+                                    <div class="text-danger text-center mt-3" id="serverError"></div>
                                     <div class="d-grid">
                                         <button type="submit" class="btn text-white"
                                             style="background-color: #D02964;">Sign in</button>
                                     </div>
-                                    <div class="text-center mt-3">
-                                        <span>Don't have account? </span>
-                                        <a href="./AdminSignUp.php" style="color: #D02964; text-decoration: none;">Sign
-                                            up</a>
-                                    </div>
                                     <div class="text-center mt-3 d-flex justify-content-evenly">
                                         <a href="javascript:history.back()" style="color: #D02964; text-decoration: none;">Back</a>
-                                        <a href="../home.php" style="color: #D02964; text-decoration: none;">Home</a>
                                     </div>
                                 </form>
-                                <div class="text-danger text-center mt-3" id="serverError"></div>
                             </div>
                         </div>
                     </div>
@@ -78,6 +72,8 @@
             </div>
         </div>
     </div>
+
+    <script src="./../../JQuery/jquery-3.7.1.js"></script>
 
     <script>
         document.getElementById("adminLoginForm").addEventListener("submit", function (event) {
@@ -93,7 +89,7 @@
             passwordError.innerText = "";
             serverError.innerText = "";
 
-            if (!email.match(/^\S+@\S+\.\S+$/)) {
+            if (!email.match(/^[a-zA-Z0-9_.]{3,}@[a-zA-Z.]{3,12}.[a-zA-Z]{2,5}$/)) {
                 emailError.innerText = "Please enter a valid email address.";
                 isValid = false;
             }
@@ -103,25 +99,24 @@
             }
 
             if (isValid) {
-                let formData = new FormData();
-                formData.append("email", email);
-                formData.append("password", password);
-
-                fetch("admin_login.php", {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            window.location.href = "admin_dashboard.php";
-                        } else {
-                            serverError.innerText = data.message;
-                        }
-                    })
-                    .catch(error => {
+                $.ajax({
+                    url: "../../dbfunctions/adminloginfunctions.php",
+                    type: "POST",
+                    data: {
+                        email: email,
+                        password: password
+                    },
+                    success: function(data) {
+                        if(data){
+                            window.location.href="./AdminDashboard.php";
+                        }else{
+                            serverError.textContent="Invalid Admin";
+                        }                     
+                    },
+                    error: function(xhr, status, error) {
                         serverError.innerText = "An error occurred. Please try again later.";
-                    });
+                    }
+                });
             }
         });
     </script>
