@@ -44,11 +44,7 @@ include_once "./../component/user_nav.php";
             width: 100%;
             margin-bottom: 10px;
         }
-        .btn-success {
-            background-color: #E33F5C;
-            border: none;
-        }
-        .btn-success:hover {
+        .btn:hover {
             background-color: #ED555A;
         }
         .error {
@@ -64,25 +60,25 @@ include_once "./../component/user_nav.php";
                 <div class="form-section">
                     <h2 class="text-center">Create an Account</h2>                    
                     <!-- User Signup Form -->
-                    <form id="signupForm">
+                    <form id="signupForm" method="POST" >
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter username">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
                             <div class="error" id="usernameError"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
                             <div class="error" id="emailError"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
                             <div class="error" id="phoneError"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
                             <div class="error" id="passwordError"></div>
                         </div>
                         <div class="mb-3">
@@ -90,7 +86,10 @@ include_once "./../component/user_nav.php";
                             <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
                             <div class="error" id="confirmPasswordError"></div>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Create Account</button>
+                        <div class="text-center mt-3 mb-3">
+                            <div class="error" id="genericError"></div>    
+                        </div>
+                        <button type="submit" class="btn w-100 text-white" style="background-color: #E33F5C;">Create Account</button>
                         <div class="text-center mt-3">
                             <span>Already have account? </span>
                             <a href="./UserLogin.php" style="color: #D02964; text-decoration: none;">Sign In</a>
@@ -100,11 +99,15 @@ include_once "./../component/user_nav.php";
                 <div class="info-section">
                     <h2>Embark on a New Journey!</h2>
                     <p>Join us and explore new opportunities!</p>
-                    <img src="user-image.png" alt="User Illustration" class="img-fluid" style="max-width: 80%;">
+                    <img src="" alt="User Illustration" class="img-fluid" style="max-width: 80%;">
                 </div>
             </div>
         </div>
     </div>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
     <script>
         document.getElementById("signupForm").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -120,12 +123,14 @@ include_once "./../component/user_nav.php";
             var phoneError = document.getElementById("phoneError");
             var passwordError = document.getElementById("passwordError");
             var confirmPasswordError = document.getElementById("confirmPasswordError");
-            
+            var genericError=document.getElementById("genericError");
+
             usernameError.textContent = "";
             emailError.textContent = "";
             phoneError.textContent = "";
             passwordError.textContent = "";
             confirmPasswordError.textContent = "";
+            genericError.textContent="";
             
             var valid = true;
             
@@ -158,23 +163,35 @@ include_once "./../component/user_nav.php";
             
             if (!valid) return;
             
-            var formData = new FormData();
-            formData.append("username", username);
-            formData.append("email", email);
-            formData.append("phone", phone);
-            formData.append("password", password);
-            
-            fetch("signup.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                document.getElementById("signupForm").reset();
-            })
-            .catch(error => console.error("Error:", error));
+        $.ajax({
+                url: "../dbfunctions/userdbfunctions.php", // PHP script to handle the request
+                type: "POST",
+                data:{
+                    "username":username,
+                    "email":email,
+                    "phone":phone,
+                    "password":password
+                },
+                success: function(data) {
+                    let response=JSON.parse(data);
+                    if(response['success']){
+                        $("#signupForm")[0].reset();
+                        $(location).attr("href", "./UserLogin.php");
+                    }else{
+                        genericError.textContent="User Already Exists";
+                    }
+
+                    // Reset the form after successful submission
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                    console.log("XHR Response:", xhr.responseText); // Show server response
+                    console.log("Status:", status);
+                    alert("Error: " + error + "\nResponse: " + xhr.responseText);
+                 }
         });
+    });
+
     </script>
     <script src="./../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
