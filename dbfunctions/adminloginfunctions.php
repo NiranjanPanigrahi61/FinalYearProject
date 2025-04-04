@@ -19,5 +19,4 @@ try{
 }finally{
     $conn->close();
 }
-
 ?>

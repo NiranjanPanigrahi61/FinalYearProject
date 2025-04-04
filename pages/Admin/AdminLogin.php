@@ -108,7 +108,7 @@
                     },
                     success: function(data) {
                         if(data){
-                            window.location.href="./AdminDashboard.php";
+                            window.location.href="./AdminIndex.php";
                         }else{
                             serverError.textContent="Invalid Admin";
                         }                     
