@@ -1,5 +1,4 @@
 <?php
-//
 require_once "dbconnect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 function userSignUp(){
     global $conn;
     // Get form data
-    $username = $_POST['username'];
+    $name = $_POST['username'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $password = $_POST['password']; 
@@ -20,7 +19,7 @@ function userSignUp(){
         exit;
     }
     // Call addUser function
-    $status = addUser($username, $email, $phone, $password);
+    $status = addUser($name, $email, $phone, $password);
     if ($status) {
         echo json_encode(["success" => true, "message" => "Signup successful! Redirecting to login page..."]);
     } else {
@@ -29,12 +28,12 @@ function userSignUp(){
 }
 
 // Function to add a new user
-function addUser($username, $email, $phone, $password) {
+function addUser($name, $email, $phone, $password) {
     global $conn;
     try {
-        $qry = "INSERT INTO user (username, email, phone, password) VALUES (?, ?, ?, ?)";
+        $qry = "INSERT INTO user (name, phone, email, password) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($qry);
-        $stmt->bind_param("ssss", $username, $email, $phone, $password);
+        $stmt->bind_param("ssss", $name,$phone, $email, $password);
 
         $status = $stmt->execute();
         return $status;
@@ -45,12 +44,12 @@ function addUser($username, $email, $phone, $password) {
     }
 }
 
-// function addUser($username, $email, $phone, $password) {
+// function addUser($name, $email, $phone, $password) {
 //     global $conn;
 //     try {
-//         $qry = "INSERT INTO users (username, email, phone, password) VALUES (?, ?, ?, ?)";
+//         $qry = "INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)";
 //         $stmt = $conn->prepare($qry);
-//         $stmt->bind_param("ssss", $username, $email, $phone, $password);
+//         $stmt->bind_param("ssss", $name, $email, $phone, $password);
 
 //         $status = $stmt->execute();
 //         if (!$status) {
@@ -124,12 +123,12 @@ function emailExists($email,$phone) {
 // }
 
 // Function to update user details
-// function updateUser($id, $username, $email, $phone) {
+// function updateUser($id, $name, $email, $phone) {
 //     global $conn;
 //     try {
-//         $qry = "UPDATE users SET username = ?, email = ?, phone = ? WHERE id = ?";
+//         $qry = "UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?";
 //         $stmt = $conn->prepare($qry);
-//         $stmt->bind_param("sssi", $username, $email, $phone, $id);
+//         $stmt->bind_param("sssi", $name, $email, $phone, $id);
 
 //         $status = $stmt->execute();
 //         return $status;
