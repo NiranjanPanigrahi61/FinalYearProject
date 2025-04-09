@@ -7,7 +7,7 @@ $dotenv->load();
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 
-// AWS Info
+// AWS Information
 $bucketName = 'bakeybucket';
 $IAM_KEY = $_ENV['AWS_ACCESS_KEY'];
 $IAM_SECRET = $_ENV['AWS_SECRET_KEY'];
