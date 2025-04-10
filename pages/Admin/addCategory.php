@@ -28,7 +28,7 @@ include_once "./AdminSideNavBar.php";
     <div class="container mx-auto category_add_block">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6"> <!-- 100% on mobile, 50% on desktop -->
-            <form method="POST" action="../../dbfunctions/addcategory.php" class="border p-4 rounded shadow">
+            <form method="POST" action="../../dbfunctions/addcategoryfn.php" class="border p-4 rounded shadow">
                 <h4 class="mb-4 text-center">Add New Category</h4>
 
                 <div class="form-floating mb-3">
