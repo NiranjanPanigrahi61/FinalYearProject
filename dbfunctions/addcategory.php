@@ -19,8 +19,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
 
     if ($stmt->execute()) {
         // Create a new table for this category
-        $createTableSql = "
-            CREATE TABLE `$tableName` (
+        if($categoryName=="Cake" || $categoryName=="Cake"){
+            $createTableSql = "
+                CREATE TABLE `$tableName` (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                product_name VARCHAR(255) NOT NULL,
+                description TEXT,
+                price DECIMAL(10,2),
+                weight VARCHAR(50),
+                size VARCHAR(50),
+                image VARCHAR(255),
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+            ";
+        }else{
+            $createTableSql = "
+                CREATE TABLE `$tableName` (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 product_name VARCHAR(255) NOT NULL,
                 description TEXT,
@@ -28,10 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
                 image VARCHAR(255),
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
-        ";
-
+            ";
+        }
         if ($conn->query($createTableSql)) {
-            echo "<script>alert('Category and table \"$tableName\" created successfully.'); window.location.href='add_category_form.php';</script>";
+            echo "<script>window.location.href='../pages/Admin/addCategory.php'; alert('Category Added successfully.');</script>";
         } else {
             echo "Failed to create table: " . $conn->error;
         }
