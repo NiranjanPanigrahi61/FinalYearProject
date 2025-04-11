@@ -139,7 +139,7 @@ include_once "./../component/user_nav.php";
                 valid = false;
             }
             
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var emailPattern = /^[a-zA-Z0-9_.]{3,}@[a-zA-Z.]{3,12}.[a-zA-Z]{2,5}$/;
             if (!emailPattern.test(email)) {
                 emailError.textContent = "Enter a valid email address.";
                 valid = false;
@@ -175,20 +175,21 @@ include_once "./../component/user_nav.php";
                 success: function(data) {
                     let response=JSON.parse(data);
                     if(response['success']){
+                        // Reset the form after successful submission
                         $("#signupForm")[0].reset();
                         $(location).attr("href", "./UserLogin.php");
                     }else{
                         genericError.textContent="User Already Exists";
                     }
 
-                    // Reset the form after successful submission
+                    
                 },
                 error: function(xhr, status, error) {
                     console.error("AJAX Error:", error);
                     console.log("XHR Response:", xhr.responseText); // Show server response
                     console.log("Status:", status);
                     alert("Error: " + error + "\nResponse: " + xhr.responseText);
-                 }
+                }
         });
     });
 

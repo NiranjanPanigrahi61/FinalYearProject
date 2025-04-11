@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .sidebar {
+      height: 100vh;
+      border-right: 1px solid #ddd;
+      background-color: #f8f9fa;
+    }
+    .nav-link.active {
+      background-color: #e9ecef;
+      font-weight: bold;
+    }
+    .wallet-badge {
+      background-color: red;
+      color: white;
+      padding: 0 6px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+    }
+    .profile-form input[readonly] {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar list-group p-3">
+      <ul class="nav flex-column">
+        <li class="nav-item "><a href="#" class="nav-link" onclick="loadSection('orders')">📦 My Orders</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" onclick="loadSection('wallet')">👛 My Wallet <span class="wallet-badge">₹0</span></a></li>
+        <li class="nav-item"><a href="#" class="nav-link" onclick="loadSection('address')">📒 Address Book</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" onclick="loadSection('cards')">💳 Manage Saved Cards</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" onclick="loadSection('upi')">📍 Manage Saved UPI</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" onclick="loadSection('reviews')">💬 My Reviews</a></li>
+        <li class="nav-item"><a href="#" class="nav-link active" onclick="loadSection('profile')">👤 My Profile</a></li>
+      </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="col-md-9 p-4" id="contentArea">
+      <!-- AJAX content will load here -->
+    </div>
+  </div>
+</div>
+
+<!-- Sample Profile Form -->
+<template id="profile-template">
+  <h4>Profile Details</h4>
+  <form class="profile-form">
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" class="form-control" value="subhendu">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Birthday</label>
+      <div class="d-flex gap-2">
+        <select class="form-select" style="width: 100px;">
+          <option>Date</option>
+        </select>
+        <select class="form-select" style="width: 100px;">
+          <option>Month</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Mobile</label>
+      <input type="text" class="form-control" value="8457863022" readonly>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email <span class="text-danger">*</span></label>
+      <input type="email" class="form-control" value="subha@gmail.com" readonly>
+    </div>
+    <button type="submit" class="btn btn-danger">Edit Profile</button>
+    <p class="mt-2"><small>(*) Email is not changeable. Click <a href="#">Support</a> for more details.</small></p>
+  </form>
+</template>
+
+<script>
+  // Load section content dynamically (simulate AJAX with JS templates)
+  function loadSection(section) {
+    const contentArea = document.getElementById('contentArea');
+
+    if (section === 'profile') {
+      const template = document.getElementById('profile-template');
+      contentArea.innerHTML = template.innerHTML;
+    } else {
+      contentArea.innerHTML = `<h4>${section.replace(/^\w/, c => c.toUpperCase())} Section</h4><p>Content for ${section} goes here...</p>`;
+    }
+
+    // Update active nav
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    const clickedLink = [...document.querySelectorAll('.nav-link')].find(link => link.innerText.toLowerCase().includes(section));
+    if (clickedLink) clickedLink.classList.add('active');
+  }
+
+  // Load default section
+  window.onload = () => {
+    loadSection('profile');
+  };
+</script>
+
+</body>
+</html>

@@ -126,7 +126,8 @@
                 <div class="col-md-4">
                     <div class="card testimonial-card">
                         <div class="card-body">
-                            <p class="card-text">Cakey Bakey made my celebration even more special! Every detail was perfect, and the cake arrived right on time. 🎂✨❤️❤️</p>
+                            <p class="card-text">Cakey Bakey made my day extra special! Every detail was taken care of,
+                                and the cake was delivered perfectly on time. 🎂✨❤️</p>
                             <div class="d-flex align-items-center  ps-0 pt-5 pb-0 pe-5">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                     class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -135,7 +136,7 @@
                                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                                 </svg>
                                 <div>
-                                    <strong>Subhendu Behera.</strong><br>
+                                    <strong>Subhendu Behera</strong><br>
                                     <small>Happy Client</small>
                                 </div>
                             </div>

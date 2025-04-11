@@ -70,51 +70,67 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/com
         </div>
     </div>
     
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+
+
     <script>
         document.getElementById("userLoginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            let email = document.getElementById("user-email").value;
-            let password = document.getElementById("user-password").value;
-            let emailError = document.getElementById("userEmailError");
-            let passwordError = document.getElementById("userPasswordError");
-            let serverError = document.getElementById("serverError");
-            let isValid = true;
-
-            emailError.innerText = "";
-            passwordError.innerText = "";
-            serverError.innerText = "";
-
-            if (!email.match(/^\S+@\S+\.\S+$/)) {
-                emailError.innerText = "Please enter a valid email address.";
-                isValid = false;
-            }
-            if (password.length < 6) {
-                passwordError.innerText = "Password must be at least 6 characters long.";
-                isValid = false;
-            }
-            
-            if (isValid) {
-                let formData = new FormData();
-                formData.append("email", email);
-                formData.append("password", password);
-
-                fetch("user_login.php", {
-                    method: "POST",
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = "user_dashboard.php";
-                    } else {
-                        serverError.innerText = data.message;
-                    }
-                })
-                .catch(error => {
-                    serverError.innerText = "An error occurred. Please try again later.";
-                });
+        event.preventDefault();
+        
+        var email = document.getElementById("user-email").value;
+        var password = document.getElementById("user-password").value;
+        var emailError = document.getElementById("userEmailError");
+        var passwordError = document.getElementById("userPasswordError");
+        var serverError = document.getElementById("serverError");
+        
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        serverError.textContent = "";
+        
+        var valid = true;
+        
+        var emailPattern = /^[a-zA-Z0-9_.]{3,}@[a-zA-Z.]{3,12}.[a-zA-Z]{2,5}$/;
+        if (!emailPattern.test(email)) {
+            emailError.textContent = "Please enter a valid email address.";
+            valid = false;
+        }
+        
+        if (password.length < 6) {
+            passwordError.textContent = "Password must be at least 6 characters long.";
+            valid = false;
+        }
+        
+        if (!valid) return;
+        
+        $.ajax({
+            url: "../dbfunctions/userdbfunctions.php", // PHP script to handle the request
+            type: "POST",
+            data: {
+                "email": email,
+                "password": password
+            },
+            success: function(data) {
+                let response = JSON.parse(data);
+                if (response.success) {
+                    
+                    $(location).attr("href", "home.php");
+                } else {
+                    serverError.textContent = response.message;
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+                console.log("XHR Response:", xhr.responseText);
+                console.log("Status:", status);
+                serverError.textContent = "An error occurred. Please try again later.";
             }
         });
+    });
+
     </script>
     
     <script src="./../Bootstrap/bootstrap.bundle.min.js"></script>
