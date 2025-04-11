@@ -48,8 +48,8 @@
                 </a>
                 <div class="collapse ps-3" id="inventoryCollapseDesktop">
                     <ul class="list-unstyled mb-0">
-                        <li><a class="nav-link" href="./addCategory.php">Add Item</a></li>
-                        <li><a class="nav-link" href="#">Remove Item</a></li>
+                        <li><a class="nav-link" href="./addCategory.php">Add Category</a></li>
+                        <li><a class="nav-link" href="#">Remove Category</a></li>
                     </ul>
                 </div>
             </li>
@@ -78,8 +78,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Inventory</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="./addCategory.php">Add Item</a></li>
-                        <li><a class="dropdown-item" href="#">Remove Item</a></li>
+                        <li><a class="dropdown-item" href="./addCategory.php">Add Category</a></li>
+                        <li><a class="dropdown-item" href="#">Remove Category</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#">Customize Cake</a></li>

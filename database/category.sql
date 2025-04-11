@@ -24,45 +24,48 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `category`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `profilepic` varchar(255) NOT NULL
+  `table_name` varchar(255) NOT NULL,
+  `table_img` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` enum('active','inactive') DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `category`
 --
 
-INSERT INTO `user` (`id`, `name`, `phone`, `email`, `password`, `profilepic`) VALUES
-(1, 'Niranjan', '5675467764', 'niranjan@gmail.com', 'Niranjan@123', '');
+INSERT INTO `category` (`id`, `name`, `table_name`, `table_img`, `created_at`, `updated_at`, `status`) VALUES
+(1, 'Cake', 'cake', '', '2025-04-10 06:21:11', '2025-04-11 05:10:44', 'active'),
+(2, 'Bread', 'bread', '', '2025-04-10 06:27:30', '2025-04-10 21:25:41', 'active'),
+(3, 'Pastries', 'pastries', '', '2025-04-10 06:35:46', '2025-04-10 21:25:44', 'active');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `user`
+-- Indexes for table `category`
 --
-ALTER TABLE `user`
+ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `phone` (`phone`,`email`);
+  ADD UNIQUE KEY `table_name` (`table_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `category`
 --
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
