@@ -39,7 +39,7 @@
     <div class="d-none d-md-block position-fixed vh-100 p-3 nav " style="width: 250px; background-color: #D02964;">
         <ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link active" href="./dashboard.php">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
+            <li class="nav-item"><a class="nav-link" href="./items.php">Items</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#inventoryCollapseDesktop" role="button"
@@ -72,13 +72,13 @@
         </div>
         <div class="offcanvas-body">
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link active" href="./dashboard.php">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Ordeers</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Inventory</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Add Item</a></li>
+                        <li><a class="dropdown-item" href="./addCategory.php">Add Item</a></li>
                         <li><a class="dropdown-item" href="#">Remove Item</a></li>
                     </ul>
                 </li>
