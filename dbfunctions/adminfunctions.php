@@ -42,4 +42,23 @@
             $conn->close();
         }
     }
+
+    function showproduct(){
+        global $conn;
+        try{
+            $qry="SELECT * FROM category";
+            $stmt=$conn->prepare($qry);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            if($result->num_rows>0){
+                return $result; 
+            }else{
+                return false;
+            }
+        }catch(Exception $e){
+            die($e->getMessage());
+        }finally{
+            $conn->close();
+        }
+    }
 ?>
