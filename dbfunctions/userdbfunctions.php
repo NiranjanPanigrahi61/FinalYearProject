@@ -36,9 +36,9 @@ function addUser($username, $email, $phone, $password) {
     global $conn;
 
     try {
-        $qry = "INSERT INTO user (username, email, phone, password) VALUES (?, ?, ?, ?)";
+        $qry = "INSERT INTO user (username, phone, email, password) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($qry);
-        $stmt->bind_param("ssss", $username, $email, $phone, $password);
+        $stmt->bind_param("ssss", $username,$phone, $email, $password);
 
         $status = $stmt->execute();
         return $status;

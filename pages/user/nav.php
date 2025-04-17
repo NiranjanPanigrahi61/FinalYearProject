@@ -104,6 +104,7 @@ include_once "../../config.php";
             </div>
         </div>
     </nav>
+    
     <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
