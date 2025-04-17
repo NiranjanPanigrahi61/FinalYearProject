@@ -65,9 +65,13 @@ include_once "./AdminSideNavBar.php";
         }
 
         tr.highlighted td {
-            background-color:#FC8F59 !important;
+            box-shadow: 0 0 10px 3px #FC8F59 inset, 0 0 8px 2px #FC8F59;
+            transition: box-shadow 0.3s ease-in-out;
         }
-        
+
+        tr.hidden-row {
+            display: none;
+        }
     </style>
 </head>
 
@@ -102,10 +106,10 @@ include_once "./AdminSideNavBar.php";
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="itemTableBody">
                         <?php
                         while ($row = $data->fetch_assoc()) {
-                            $status = $row['status']; // 'active' or 'inactive'
+                            $status = $row['status'];
                             $isChecked = $status === 'active' ? 'checked' : '';
                         ?>
                             <tr>
@@ -119,9 +123,7 @@ include_once "./AdminSideNavBar.php";
                                     </div>
                                 </td>
                             </tr>
-                        <?php
-                        }
-                        ?>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -129,68 +131,97 @@ include_once "./AdminSideNavBar.php";
     <?php } ?>
 
     <script src="./../../JQuery/jquery-3.7.1.js"></script>
+    <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
 
     <script>
         $(document).ready(function() {
             const $input = $('#searchInput');
             const $suggestions = $('#suggestions');
-            const $rows = $('tbody tr');
+            const $rows = $('#itemTableBody tr');
 
-            // Collect item names
-            const items = [];
-            $rows.each(function() {
-                items.push($(this).find('td:nth-child(2)').text().trim());
-            });
-
-            // Show suggestions
+            // Live filtering while typing
             $input.on('input', function() {
-                const val = $(this).val().toLowerCase();
+                const val = $(this).val().toLowerCase().trim();
                 $suggestions.empty();
+                $rows.removeClass('highlighted');
 
-                if (val.length === 0) return;
+                if (val === '') {
+                    $rows.show();
+                    return;
+                }
 
-                const matches = items.filter(item => item.toLowerCase().includes(val));
-                matches.forEach(match => {
-                    $suggestions.append(`<li class="list-group-item list-group-item-action">${match}</li>`);
+                let hasMatches = false;
+
+                $rows.each(function() {
+                    const rowText = $(this).find('td:nth-child(2)').text().toLowerCase();
+                    if (rowText.includes(val)) {
+                        $(this).show();
+                        hasMatches = true;
+                        $suggestions.append(`<li class="list-group-item list-group-item-action">${rowText}</li>`);
+                    } else {
+                        $(this).hide();
+                    }
                 });
+
+                if (!hasMatches) {
+                    $suggestions.append(`<li class="list-group-item disabled">No matches</li>`);
+                }
             });
 
-            // On suggestion click
+            // Suggestion click
             $suggestions.on('click', 'li', function() {
                 const text = $(this).text();
                 $input.val(text);
                 $suggestions.empty();
-                highlightRow(text);
+                exactSearch(text);
             });
 
-            // On search button click
+            // Button search - exact match
             $('#searchBtn').on('click', function() {
-                const searchText = $input.val().trim();
-                if (searchText) {
-                    highlightRow(searchText);
+                const val = $input.val().trim();
+                if (val !== '') {
+                    exactSearch(val);
                 }
             });
 
-            // Highlight matching row
-            function highlightRow(searchText) {
+            // Enter key triggers exact match
+            $input.on('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = $input.val().trim();
+                    if (val !== '') {
+                        exactSearch(val);
+                    }
+                }
+            });
+
+            // Exact match search + highlight + scroll
+            function exactSearch(text) {
                 let found = false;
                 $rows.removeClass('highlighted');
 
                 $rows.each(function() {
-                    const nameCell = $(this).find('td:nth-child(2)');
-                    if (nameCell.text().trim().toLowerCase() === searchText.toLowerCase()) {
-                        $(this).addClass('highlighted');
-                        $(this)[0].scrollIntoView({
+                    const name = $(this).find('td:nth-child(2)').text().trim();
+                    if (name.toLowerCase() === text.toLowerCase()) {
+                        $rows.hide();
+                        $(this).show().addClass('highlighted');
+                        this.scrollIntoView({
                             behavior: 'smooth',
                             block: 'center'
                         });
+
+                        // Optional: Remove glow after 3 seconds
+                        setTimeout(() => {
+                            $(this).removeClass('highlighted');
+                        }, 3000);
+
                         found = true;
                         return false;
                     }
                 });
 
                 if (!found) {
-                    alert("Item not found.");
+                    alert('Exact match not found.');
                 }
             }
 
@@ -201,7 +232,7 @@ include_once "./AdminSideNavBar.php";
                 }
             });
 
-            // Toggle status logic (kept as-is)
+            // Toggle status with AJAX
             $('.toggle-status').on('change', function() {
                 const checkbox = $(this);
                 const id = checkbox.data('id');
@@ -227,7 +258,6 @@ include_once "./AdminSideNavBar.php";
         });
     </script>
 
-    <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
