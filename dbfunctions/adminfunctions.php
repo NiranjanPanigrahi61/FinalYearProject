@@ -61,4 +61,15 @@
             $conn->close();
         }
     }
+
+    function addProduct($table_name,$name,$price,$quantity,$weight,$size,$description,$productImg){
+        global $conn;
+        try{
+
+        }catch(Exception $e){
+
+        }finally{
+            $conn->close();
+        }
+    }
 ?>
