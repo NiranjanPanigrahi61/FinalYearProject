@@ -52,7 +52,7 @@ $data = showItems();
             <div class="col">
                 <h3 class="">Add Product</h3>
                 <p id="msg"></p>
-                <form action="" method="post" enctype="multipart/form-data" class="w-75">
+                <form action="" method="post" enctype="multipart/form-data" class="w-75" id="productAddForm">
                     <div class="form-floating mb-3 border-0 ">
                         <input type="file" name="productimg" placeholder="" class="form-control mb-3">
                         <label for="productimg">Add Product Image</label>
@@ -201,8 +201,13 @@ $data = showItems();
                         $('#msg').html('<div class="alert alert-info w-75">Uploading...</div>');
                     },
                     success: function(response) {
-                        console.log(response);
-                        
+                        if(response){
+                            $('#msg').html(`<div class="alert alert-success w-75">${name}Added Successfully.</div>`);
+                            $('#productAddForm')[0].reset();
+                        }else{
+                            $('#msg').html(`<div class="alert alert-danger w-75">${name} Not added...Something Went Wrong.</div>`);
+                            $('#productAddForm')[0].reset();
+                        }
                     },
                     error: function(xhr, status, error) {
                         $('#msg').html('<div class="alert alert-danger w-75">Error: ' + xhr.responseText + '</div>');
