@@ -29,7 +29,7 @@
                     <div class="contactinfo ps-5">
                         <p>Email:bakery@gmail.com</p>
                         <p>Phone: +91 7208946835</p>
-                        <p>Address: 2 sector 4, Bhubaneswar, India</p>
+                        <p>Address: Sector 4, Bhubaneswar, India</p>
                         <a href="" class="text-white text-decoration-none">
                             <p>feed back</p>
                         </a>
