@@ -83,7 +83,7 @@ include_once "./../config.php";
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="feedback.html">
+                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>component/feedback.php">
                             <i class="fa-solid fa-comment-dots"></i> Feedback
                         </a>
                     </li>
