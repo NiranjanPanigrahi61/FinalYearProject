@@ -66,7 +66,7 @@ $data = showproduct();
                                             ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $res['name']; ?></h5>
-                                    <a href="#" class="btn mx-auto d-block">Manage</a>
+                                    <a href="./AdminManageProduct.php?id=<?php echo $res['table_name']?>" class="btn mx-auto d-block">Manage</a>
                                 </div>
                             </div>
                         </div>
