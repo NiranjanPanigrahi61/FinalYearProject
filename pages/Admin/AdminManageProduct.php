@@ -317,7 +317,7 @@ $data = manageProduct($id);
                     title: 'No Changes',
                     text: 'You have not made any changes.',
                     icon: 'info',
-                    confirmButtonColor: '#3085d6',
+                    confirmButtonColor: '#D02964',
                     background: '#f0f0f0',
                     color: '#333'
                 }).then((result) => {

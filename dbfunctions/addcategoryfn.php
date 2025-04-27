@@ -12,14 +12,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
         die("Invalid category name.");
     }
 
+    $tempLoc = $_FILES['category_image']['tmp_name'];
+    $image = time() . "-" . $_FILES['category_image']['name'];
+    require_once "../aws/upload.php";
+    $finalImgPath = uploadtoS3("category", $tempLoc, $image);
+
+
     // Insert into categories table
-    $insertSql = "INSERT INTO category (name, table_name) VALUES (?, ?)";
+    $insertSql = "INSERT INTO category (name, table_name, table_img) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($insertSql);
-    $stmt->bind_param("ss", $categoryName, $tableName);
+    $stmt->bind_param("sss", $categoryName, $tableName, $finalImgPath);
 
     if ($stmt->execute()) {
         // Create a new table for this category
-        if($categoryName=="Cake" || $categoryName=="Cake"){
+        if ($categoryName == "Cake" || $categoryName == "Cake") {
             $createTableSql = "
                 CREATE TABLE `$tableName` (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -29,10 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
                 weight VARCHAR(50),
                 size VARCHAR(50),
                 image VARCHAR(255),
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                status ENUM('Active', 'Inactive') DEFAULT 'Active'
             )
             ";
-        }else{
+        } else {
             $createTableSql = "
                 CREATE TABLE `$tableName` (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -40,12 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
                 description TEXT,
                 price DECIMAL(10,2),
                 image VARCHAR(255),
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                status ENUM('Active', 'Inactive') DEFAULT 'Active'
             )
             ";
         }
         if ($conn->query($createTableSql)) {
-            echo "<script>window.location.href='../pages/Admin/addCategory.php'; alert('Category Added successfully.');</script>";
+            header("Location: ../pages/Admin/addCategory.php?success=1");
+            exit();
         } else {
             echo "Failed to create table: " . $conn->error;
         }
@@ -58,4 +67,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
 } else {
     echo "Invalid request.";
 }
-?>
