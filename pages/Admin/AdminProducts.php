@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["loggedin"])){
+    header("location:AdminLogin.php");
+    exit();
+}
 require_once "../../dbfunctions/adminfunctions.php";
 
 include_once "./AdminTopNavBar.php";
@@ -25,7 +30,7 @@ $data = showproduct();
 
         @media (max-width: 768px) {
             .product-block {
-                margin-left: 0;
+                margin-left: 0px;
                 margin-top: 86px;
                 width: 100%;
             }
