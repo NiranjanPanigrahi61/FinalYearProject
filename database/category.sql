@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2025 at 07:46 AM
+-- Generation Time: Apr 27, 2025 at 10:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,9 +42,11 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `table_name`, `table_img`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Cake', 'cake', '', '2025-04-10 06:21:11', '2025-04-11 05:10:44', 'active'),
-(2, 'Bread', 'bread', '', '2025-04-10 06:27:30', '2025-04-10 21:25:41', 'active'),
-(3, 'Pastries', 'pastries', '', '2025-04-10 06:35:46', '2025-04-10 21:25:44', 'active');
+(1, 'Cake', 'cake', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/Cake_category.jpg', '2025-04-10 06:21:11', '2025-04-27 08:48:53', 'active'),
+(2, 'Bread', 'bread', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/Bread_category.jpg', '2025-04-10 06:27:30', '2025-04-27 08:48:12', 'active'),
+(3, 'Pastries', 'pastries', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/Pastries_category.jpg', '2025-04-10 06:35:46', '2025-04-27 08:49:15', 'active'),
+(4, 'Cookie', 'cookie', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/1745733519-Cookie_category.jpg', '2025-04-27 05:58:57', '2025-04-27 05:58:57', 'active'),
+(5, 'Doughnuts', 'doughnuts', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/1745736327-doughnuts_category.jpg', '2025-04-27 06:45:28', '2025-04-27 06:45:28', 'active');
 
 --
 -- Indexes for dumped tables
@@ -65,7 +67,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
