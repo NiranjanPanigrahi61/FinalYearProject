@@ -108,4 +108,15 @@ function manageProduct($table_name){
         $conn->close();
     }
 }
+
+function adminDetails(){
+    global $conn;
+    try{
+        
+    }catch(Exception $e){
+        die($e->getMessage());
+    }finally{
+        $conn->close();
+    }
+}
 ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["loggedin"])){
+if (!isset($_SESSION["loggedin"])) {
     header("location:AdminLogin.php");
     exit();
 }
@@ -158,8 +158,13 @@ $data = manageProduct($id);
                                         Update
                                     </button>
 
-                                    <a href="../../dbfunctions/removeProduct.php?id=<?php echo $result['id']; ?>&name=<?php echo $id; ?>"
-                                        class="btn btn-remove">Remove</a>
+                                    <button class="btn btn-remove" onclick="confirmRemove(
+                                            '<?php echo $result['id']; ?>', 
+                                            '<?php echo $id; ?>', 
+                                            '<?php echo $result['image']; ?>'
+                                        )">
+                                        Remove
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -388,6 +393,60 @@ $data = manageProduct($id);
                 color: '#333', // text color
             })
         });
+
+        // remove product
+        function confirmRemove(productId, tableName, imageUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action will delete the product and its image permanently!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33', // Red for confirm
+                cancelButtonColor: '#3085d6', // Blue for cancel
+                confirmButtonText: 'Yes, delete it!',
+                background: '#f0f0f0',
+                color: '#333'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed with AJAX deletion
+                    $.ajax({
+                        url: '../../dbfunctions/removeProduct.php',
+                        type: 'POST',
+                        data: {
+                            id: productId,
+                            name: tableName,
+                            image_url: imageUrl
+                        },
+                        success: function(response) {
+                            
+                            if (response.trim() === "success") {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Product has been deleted.',
+                                    'success'
+                                ).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Failed to delete the product.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        }
     </script>
 </body>
 
