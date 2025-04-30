@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
                 product_name VARCHAR(255) NOT NULL,
                 description TEXT,
                 price DECIMAL(10,2),
+                quantity INT DEFAULT 0,
                 weight VARCHAR(50),
                 size VARCHAR(50),
                 image VARCHAR(255),
@@ -46,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcategory'])) {
                 product_name VARCHAR(255) NOT NULL,
                 description TEXT,
                 price DECIMAL(10,2),
+                quantity INT DEFAULT 0,
                 image VARCHAR(255),
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 status ENUM('Active', 'Inactive') DEFAULT 'Active'

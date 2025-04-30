@@ -13,10 +13,24 @@ include_once "./AdminSideNavBar.php";
 <head>
     <link href="../../Bootstrap/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
         .category_add_block {
-            margin-top: 180px;
             padding: 20px;
+            padding-top: 180px; /* Space for top navbar */
+            padding-left: 250px; /* Space for sidebar */
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .category_add_block {
+                padding-left: 15px; /* Remove sidebar space on mobile */
+                padding-top: 120px; /* Adjust top padding on smaller screens */
+            }
         }
 
         .form-control:focus {
@@ -32,11 +46,10 @@ include_once "./AdminSideNavBar.php";
 </head>
 
 <body>
-    <div class="container mx-auto category_add_block">
+    <div class="container-fluid category_add_block">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-6"> <!-- 100% on mobile, 50% on desktop -->
-                <!-- Add enctype="multipart/form-data" to allow file upload -->
-                <form method="POST" action="../../dbfunctions/addcategoryfn.php" enctype="multipart/form-data" class="border p-4 rounded shadow" id="addCategoryForm">
+            <div class="col-12 col-md-6">
+                <form method="POST" action="../../dbfunctions/addcategoryfn.php" enctype="multipart/form-data" class="border p-4 rounded shadow bg-white" id="addCategoryForm">
                     <h4 class="mb-4 text-center">Add New Category</h4>
 
                     <div class="form-floating mb-3">
@@ -44,10 +57,8 @@ include_once "./AdminSideNavBar.php";
                         <label for="category">Enter New Category</label>
                     </div>
 
-                    <!-- ADD THIS HIDDEN INPUT -->
                     <input type="hidden" name="addcategory" value="1">
 
-                    <!-- New image upload field -->
                     <div class="mb-3">
                         <label for="category_image" class="form-label">Upload Category Image</label>
                         <input class="form-control" type="file" id="category_image" name="category_image" accept="image/*" required>
@@ -61,11 +72,11 @@ include_once "./AdminSideNavBar.php";
         </div>
     </div>
 
-    <script src="./../../JQuery/jquery-3.7.1.js"></script>
+    <script src="../../JQuery/jquery-3.7.1.js"></script>
     <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('addCategoryForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop the form immediately
+            e.preventDefault();
 
             Swal.fire({
                 title: 'Uploading...',
@@ -73,16 +84,16 @@ include_once "./AdminSideNavBar.php";
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 didOpen: () => {
-                    Swal.showLoading(); // Show loading spinner
+                    Swal.showLoading();
                 }
             });
 
-            // After showing uploading, actually submit the form
             setTimeout(() => {
                 this.submit();
             }, 500);
         });
     </script>
+
     <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
         <script>
             Swal.fire({
@@ -93,12 +104,10 @@ include_once "./AdminSideNavBar.php";
                 confirmButtonText: 'OK'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Clear form
                     document.getElementById('addCategoryForm').reset();
                 }
             });
 
-            // Remove ?success=1 from URL after showing
             if (window.history.replaceState) {
                 const url = new URL(window.location);
                 url.searchParams.delete('success');
