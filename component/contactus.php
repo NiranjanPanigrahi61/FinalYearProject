@@ -8,42 +8,26 @@
     <title>Contact Us - Bakery Delight</title>
     <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css" />
     <style>
-        /* Custom Button Style */
         .btn-custom {
             background: linear-gradient(45deg, #D02964, #fc8f59);
-            /* Gradient color */
             color: white;
-            /* Text color */
             border: none;
-            /* No border */
             padding: 10px 20px;
-            /* Padding */
             font-size: 16px;
-            /* Font size */
             font-weight: bold;
-            /* Bold text */
             border-radius: 5px;
-            /* Rounded corners */
             transition: all 0.3s ease;
-            /* Smooth transition for hover effect */
         }
 
-        /* Hover effect */
         .btn-custom:hover {
             background: linear-gradient(45deg, #fc8f59, #D02964);
-            /* Reverse gradient on hover */
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-            /* Subtle shadow on hover */
             transform: translateY(-2px);
-            /* Slight upward movement on hover */
         }
 
-        /* Focus effect */
         .btn-custom:focus {
             outline: none;
-            /* Remove default focus outline */
             box-shadow: 0 0 0 3px rgba(240, 144, 94, 0.5);
-            /* Subtle focus outline */
         }
     </style>
 </head>
@@ -71,7 +55,13 @@
             <div class="col-lg-8">
                 <div class="w-80 mx-auto p-4 rounded" style="background-color: #FCEFF4;">
                     <h2 class="mb-4 text-center" style="color: #D02964;">Have a Query?</h2>
-                    <form>
+
+                    <!-- Custom Themed Alert Box -->
+                    <div id="formAlert" class="alert alert-danger d-none" role="alert"
+                        style="color: #D02964; background-color: #ffe5ec; border-color: #f7a1b3;">
+                    </div>
+
+                    <form id="contactForm">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control bg-white" id="name" placeholder="Name"
                                 style="color: #D02964;">
@@ -87,7 +77,7 @@
                                 style="height: 150px; color: #D02964;"></textarea>
                             <label for="message" class="fw-semibold" style="color: #D02964;">Message</label>
                         </div>
-                        <button type="submit" class="btn btn-custom w-100">Send Message</button> <!-- Custom Button -->
+                        <button type="submit" class="btn btn-custom w-100">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -96,7 +86,7 @@
 
     <!-- Section 3: Map -->
     <div class="row mb-5">
-        <h2 class="text-center" style="color: #D02964;">Find Us</h2> <!-- Centered and colored heading -->
+        <h2 class="text-center" style="color: #D02964;">Find Us</h2>
         <div class="col-12">
             <h4 class="text-center text-white mb-3">Find Us on the Map</h4>
             <div class="ratio ratio-16x9 rounded shadow">
@@ -108,14 +98,13 @@
         </div>
     </div>
 
+    <!-- JS Script for Validation -->
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector("form");
-
-        form.addEventListener("submit", function (e) {
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
             const name = document.getElementById("name").value.trim();
             const email = document.getElementById("email").value.trim();
             const message = document.getElementById("message").value.trim();
+            const alertBox = document.getElementById("formAlert");
 
             const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
             const namePattern = /^[a-zA-Z\s'-]+$/;
@@ -136,12 +125,13 @@
 
             if (errors.length > 0) {
                 e.preventDefault();
-                alert(errors.join("\n"));
+                alertBox.innerHTML = errors.join("<br>");
+                alertBox.classList.remove("d-none");
+            } else {
+                alertBox.classList.add("d-none");
             }
         });
-    });
-</script>
-
+    </script>
 
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
