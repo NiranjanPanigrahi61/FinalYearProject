@@ -55,16 +55,7 @@ $data = manageProduct($id);
             color: red;
         }
 
-        .modal-backdrop {
-            z-index: 1040 !important;
-            /* Ensure backdrop stays behind modal content */
-        }
 
-        .modal-content {
-            position: relative;
-            z-index: 1050 !important;
-            /* Ensure modal content stays in front */
-        }
     </style>
 </head>
 

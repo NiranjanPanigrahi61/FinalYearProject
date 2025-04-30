@@ -119,4 +119,22 @@ function adminDetails(){
         $conn->close();
     }
 }
+
+function adminInfo(){
+    global $conn;
+    try{
+        $qry="SELECT * FROM admininfo";
+        $stmt=$conn->prepare($qry);
+        $stmt->execute();
+        if($result=$stmt->get_result()){
+            return $result;
+        }else{
+            return false;
+        }
+    }catch(Exception $e){
+        die($e->getMessage());
+    }finally{
+        $conn->close();
+    }
+}
 ?>

@@ -1,10 +1,9 @@
 <?php
-require_once "../../dbfunctions/adminProfileFunction.php";
-
+require_once "../../dbfunctions/adminfunctions.php";
 include_once "./AdminTopNavBar.php";
 include_once "./AdminSideNavBar.php";
 
-$data=adminInfo();
+$data = adminInfo();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,66 +70,71 @@ $data=adminInfo();
 </head>
 
 <body>
-  <div class="admin-profile-block">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-          <div class="card shadow-lg p-4">
-            <div class="text-center mb-4">
-              <input type="file" id="profileImageInput" accept="image/*" class="d-none" />
-              <label for="profileImageInput" style="cursor: pointer;">
-                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="profileImage" alt="Profile Picture"
-                  class="rounded-circle mb-3" width="120" height="120" />
-              </label>
-              <h2 id="adminName" class="editable">Admin Name <i class="bi bi-pencil-fill"></i></h2>
-              <input type="text" id="nameInput" class="form-control d-none" value="Admin Name" />
-            </div>
+  <?php if ($data) {
+    $res = $data->fetch_assoc();
+  ?>
+    <div class="admin-profile-block">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-lg p-4">
+              <form id="profileForm" enctype="multipart/form-data">
+                <div class="text-center mb-4">
+                  <input type="file" id="profileImageInput" name="adminimage" accept="image/*" class="d-none" />
+                  <label for="profileImageInput" style="cursor: pointer;">
+                    <img src="<?php echo $res['adminimage'] ?: 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>"
+                      id="profileImage" alt="Profile Picture" name="image"
+                      class="rounded-circle mb-3 img-fluid object-fit-cover"
+                      width="120" height="120" />
+                  </label>
+                  <h2 id="adminName" class="editable"><?php echo $res['username']; ?> <i class="bi bi-pencil-fill"></i></h2>
+                  <input type="text" id="nameInput" name="username" class="form-control d-none" value="<?php echo $res['username']; ?>" />
+                </div>
 
-            <div class="mb-3">
-              <div class="d-flex justify-content-between align-items-center">
-                <label class="form-label mb-0">Email:</label>
-                <button class="btn btn-sm btn-outline-primary" id="editEmailBtn">
-                  <i class="bi bi-pencil-fill"></i>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label mb-0">Email:</label>
+                    <button class="btn btn-sm btn-outline-primary" type="button" id="editEmailBtn">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                  </div>
+                  <span id="emailText"><?php echo $res['email']; ?></span>
+                  <input type="email" id="emailInput" name="email" class="form-control d-none" value="<?php echo $res['email']; ?>" />
+                </div>
+
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label mb-0">Password:</label>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" id="togglePasswordBtn">
+                      <i class="bi bi-eye-slash-fill"></i>
+                    </button>
+                  </div>
+                  <span id="passwordText">******</span>
+                  <input type="password" id="passwordInput" name="password" class="form-control d-none" value="<?php echo $res['password']; ?>" readonly />
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                  <button class="btn btn-success w-48" type="submit" id="saveBtn">Save Changes</button>
+                  <button class="btn btn-danger w-48" type="button" id="logoutBtn">Logout</button>
+                </div>
+              </form>
+
+
+              <div class="text-center">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#otpModal">
+                  Change Password
                 </button>
               </div>
-              <span id="emailText">admin@example.com</span>
-              <input type="email" id="emailInput" class="form-control d-none" value="admin@example.com" />
-            </div>
-
-            <div class="mb-3">
-              <div class="d-flex justify-content-between align-items-center">
-                <label class="form-label mb-0">Password:</label>
-                <div class="btn-group">
-                  <button class="btn btn-sm btn-outline-secondary" id="togglePasswordBtn">
-                    <i class="bi bi-eye-slash-fill"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-primary" id="editPasswordBtn">
-                    <i class="bi bi-pencil-fill"></i>
-                  </button>
-                </div>
-              </div>
-              <span id="passwordText">******</span>
-              <input type="password" id="passwordInput" class="form-control d-none" value="password123" />
-            </div>
-
-            <div class="d-flex justify-content-between mb-3">
-              <button class="btn btn-success w-48" id="saveBtn">Save Changes</button>
-              <button class="btn btn-danger w-48" id="logoutBtn">Logout</button>
-            </div>
-
-            <div class="text-center">
-              <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#otpModal">
-                Change Password
-              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  <?php } ?>
 
   <!-- OTP Modal -->
-  <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
+  <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
     <div class="modal-dialog">
       <div class="modal-content">
         <form id="otpForm">
@@ -210,7 +214,7 @@ $data=adminInfo();
       }, 1000);
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
       startResendCountdown();
 
       const savedImage = localStorage.getItem("adminProfileImage");
@@ -219,11 +223,11 @@ $data=adminInfo();
         profileImageData = savedImage;
       }
 
-      $("#profileImageInput").change(function () {
+      $("#profileImageInput").change(function() {
         const file = this.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             $("#profileImage").attr("src", e.target.result);
             profileImageData = e.target.result;
           };
@@ -231,24 +235,20 @@ $data=adminInfo();
         }
       });
 
-      $("#adminName").click(function () {
+      $("#adminName").click(function() {
         $(this).addClass("d-none");
-        $("#nameInput").removeClass("d-none").focus().blur(function () {
+        $("#nameInput").removeClass("d-none").focus().blur(function() {
           const name = $(this).val();
           $("#adminName").html(name + ' <i class="bi bi-pencil-fill"></i>').removeClass("d-none");
           $(this).addClass("d-none");
         });
       });
 
-      $("#editEmailBtn").click(function () {
+      $("#editEmailBtn").click(function() {
         $("#emailText, #emailInput").toggleClass("d-none");
       });
 
-      $("#editPasswordBtn").click(function () {
-        $("#passwordText, #passwordInput").toggleClass("d-none");
-      });
-
-      $("#togglePasswordBtn").click(function () {
+      $("#togglePasswordBtn").click(function() {
         const icon = $(this).find("i");
         if (!$("#passwordInput").hasClass("d-none")) {
           const input = $("#passwordInput");
@@ -260,29 +260,29 @@ $data=adminInfo();
         icon.toggleClass("bi-eye-fill bi-eye-slash-fill");
       });
 
-      $("#saveBtn").click(function () {
-        const name = $("#nameInput").val();
-        const email = $("#emailInput").val();
-        const password = $("#passwordInput").val();
+      $("#profileForm").submit(function(e) {
+        e.preventDefault();
 
-        actualPassword = password;
-        isPasswordVisible = false;
+        const formData = new FormData(this);
 
-        $("#adminName").html(name + ' <i class="bi bi-pencil-fill"></i>');
-        $("#emailText").text(email);
-        $("#passwordText").text("******");
-        $("#passwordInput").attr("type", "password");
-
-        $("#togglePasswordBtn i").removeClass("bi-eye-fill").addClass("bi-eye-slash-fill");
-
-        if (profileImageData) {
-          localStorage.setItem("adminProfileImage", profileImageData);
-        }
-
-        Swal.fire("Success", "Changes saved!", "success");
+        $.ajax({
+          url: "../../dbfunctions/adminProfileUpdate.php",
+          method: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            console.log(response);
+            Swal.fire("Success", "Changes saved!", "success");
+          },
+          error: function() {
+            Swal.fire("Error", "Server error occurred.", "error");
+          },
+        });
       });
 
-      $("#logoutBtn").click(function () {
+
+      $("#logoutBtn").click(function() {
         Swal.fire({
           title: "Logged out!",
           icon: "info",
@@ -292,27 +292,41 @@ $data=adminInfo();
         });
       });
 
-      $("#otpForm").submit(function (e) {
+      //  FIXED MODAL TRANSITION HERE
+      $("#otpForm").submit(function(e) {
         e.preventDefault();
         const enteredOtp = $("#otpInput").val().trim();
 
         if (enteredOtp === generatedOTP) {
           $("#otpError").addClass("d-none");
-          bootstrap.Modal.getInstance($("#otpModal")[0]).hide();
-          new bootstrap.Modal($("#changePasswordModal")[0]).show();
+
+          const otpModalEl = document.getElementById("otpModal");
+          const otpModal = bootstrap.Modal.getOrCreateInstance(otpModalEl);
+          otpModal.hide();
+
+          // Attach the event only once — directly in submit handler
+          otpModalEl.addEventListener("hidden.bs.modal", function onOtpModalHidden() {
+            otpModalEl.removeEventListener("hidden.bs.modal", onOtpModalHidden);
+
+            const changePasswordModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("changePasswordModal"));
+            $(".modal-backdrop").remove();
+            $("body").removeClass("modal-open");
+            changePasswordModal.show();
+          });
+
         } else {
           $("#otpError").removeClass("d-none");
           startResendCountdown();
         }
       });
 
-      $("#resendBtn").click(function () {
+      $("#resendBtn").click(function() {
         generatedOTP = "654321";
         Swal.fire("OTP Resent", "New OTP is: " + generatedOTP, "info");
         startResendCountdown();
       });
 
-      $("#changePasswordForm").submit(function (e) {
+      $("#changePasswordForm").submit(function(e) {
         e.preventDefault();
         const current = $("#currentPassword").val().trim();
         const newPass = $("#newPassword").val().trim();
