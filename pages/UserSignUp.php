@@ -110,11 +110,12 @@ include_once "./../component/user_nav.php";
                         </div>
                     </form>
                 </div>
-                <div class="info-section">
-                    <h2>Embark on a New Journey!</h2>
-                    <p>Join us and explore new opportunities!</p>
-                    <img src="" alt="User Illustration" class="img-fluid" style="max-width: 80%;">
-                </div>
+                <div class="info-section d-flex flex-column justify-content-center align-items-center text-white text-center p-4"
+     style="background: url('../assets/signup.jpg') center center / cover no-repeat;">
+    <h2 class="fw-bold" style="color: #D02964;">Embark on a New Journey!</h2>
+    <p class="fw-bolder" style="color: #fc8f59;">Join us and explore new opportunities!</p>
+</div>
+
             </div>
         </div>
     </div>

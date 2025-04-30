@@ -108,6 +108,40 @@
         </div>
     </div>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function (e) {
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            const namePattern = /^[a-zA-Z\s'-]+$/;
+
+            let errors = [];
+
+            if (!namePattern.test(name)) {
+                errors.push("Please enter a valid name (letters only).");
+            }
+
+            if (!emailPattern.test(email)) {
+                errors.push("Please enter a valid email address.");
+            }
+
+            if (message.length < 10) {
+                errors.push("Message must be at least 10 characters long.");
+            }
+
+            if (errors.length > 0) {
+                e.preventDefault();
+                alert(errors.join("\n"));
+            }
+        });
+    });
+</script>
+
 
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
