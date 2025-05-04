@@ -15,7 +15,6 @@ $data = adminInfo();
   <link href="../../Bootstrap/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <style>
     body {
       background-color: #f8f9fa;
@@ -37,10 +36,6 @@ $data = adminInfo();
 
     .card {
       border-radius: 15px;
-    }
-
-    .btn-group {
-      gap: 5px;
     }
 
     h2.editable {
@@ -92,14 +87,8 @@ $data = adminInfo();
                 </div>
 
                 <div class="mb-3">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <label class="form-label mb-0">Email:</label>
-                    <button class="btn btn-sm btn-outline-primary" type="button" id="editEmailBtn">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
-                  </div>
-                  <span id="emailText"><?php echo $res['email']; ?></span>
-                  <input type="email" id="emailInput" name="email" class="form-control d-none" value="<?php echo $res['email']; ?>" />
+                  <label class="form-label">Email:</label>
+                  <div><?php echo $res['email']; ?></div>
                 </div>
 
                 <div class="mb-3">
@@ -119,7 +108,6 @@ $data = adminInfo();
                 </div>
               </form>
 
-
               <div class="text-center">
                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#otpModal">
                   Change Password
@@ -134,7 +122,6 @@ $data = adminInfo();
 
   <!-- OTP Modal -->
   <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-
     <div class="modal-dialog">
       <div class="modal-content">
         <form id="otpForm">
@@ -199,7 +186,8 @@ $data = adminInfo();
     let actualPassword = $("#passwordInput").val();
     let isPasswordVisible = false;
     let timer;
-    let profileImageData = "";
+    let oldProfile = $("#profileImage").attr("src");
+    let originalData = {};
 
     function startResendCountdown() {
       let seconds = 30;
@@ -214,41 +202,36 @@ $data = adminInfo();
       }, 1000);
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       startResendCountdown();
 
-      const savedImage = localStorage.getItem("adminProfileImage");
-      if (savedImage) {
-        $("#profileImage").attr("src", savedImage);
-        profileImageData = savedImage;
-      }
+      originalData = {
+        username: $("#nameInput").val(),
+        password: $("#passwordInput").val(),
+        profileImage: $("#profileImage").attr("src"),
+      };
 
-      $("#profileImageInput").change(function() {
+      $("#profileImageInput").change(function () {
         const file = this.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             $("#profileImage").attr("src", e.target.result);
-            profileImageData = e.target.result;
           };
           reader.readAsDataURL(file);
         }
       });
 
-      $("#adminName").click(function() {
+      $("#adminName").click(function () {
         $(this).addClass("d-none");
-        $("#nameInput").removeClass("d-none").focus().blur(function() {
+        $("#nameInput").removeClass("d-none").focus().blur(function () {
           const name = $(this).val();
           $("#adminName").html(name + ' <i class="bi bi-pencil-fill"></i>').removeClass("d-none");
           $(this).addClass("d-none");
         });
       });
 
-      $("#editEmailBtn").click(function() {
-        $("#emailText, #emailInput").toggleClass("d-none");
-      });
-
-      $("#togglePasswordBtn").click(function() {
+      $("#togglePasswordBtn").click(function () {
         const icon = $(this).find("i");
         if (!$("#passwordInput").hasClass("d-none")) {
           const input = $("#passwordInput");
@@ -260,10 +243,27 @@ $data = adminInfo();
         icon.toggleClass("bi-eye-fill bi-eye-slash-fill");
       });
 
-      $("#profileForm").submit(function(e) {
+      $("#profileForm").submit(function (e) {
         e.preventDefault();
 
+        const currentData = {
+          username: $("#nameInput").val(),
+          password: $("#passwordInput").val(),
+          profileImage: $("#profileImage").attr("src"),
+        };
+
+        const isChanged =
+          currentData.username !== originalData.username ||
+          currentData.password !== originalData.password ||
+          currentData.profileImage !== originalData.profileImage;
+
+        if (!isChanged) {
+          Swal.fire("No Changes", "Nothing was updated.", "info");
+          return;
+        }
+
         const formData = new FormData(this);
+        formData.append("oldUrl", oldProfile);
 
         $.ajax({
           url: "../../dbfunctions/adminProfileUpdate.php",
@@ -271,29 +271,27 @@ $data = adminInfo();
           data: formData,
           contentType: false,
           processData: false,
-          success: function(response) {
-            console.log(response);
+          success: function (response) {
             Swal.fire("Success", "Changes saved!", "success");
+            originalData = { ...currentData };
           },
-          error: function() {
+          error: function () {
             Swal.fire("Error", "Server error occurred.", "error");
           },
         });
       });
 
-
-      $("#logoutBtn").click(function() {
+      $("#logoutBtn").click(function () {
         Swal.fire({
           title: "Logged out!",
           icon: "info",
-          confirmButtonText: "OK"
+          confirmButtonText: "OK",
         }).then(() => {
           window.location.href = "/login";
         });
       });
 
-      //  FIXED MODAL TRANSITION HERE
-      $("#otpForm").submit(function(e) {
+      $("#otpForm").submit(function (e) {
         e.preventDefault();
         const enteredOtp = $("#otpInput").val().trim();
 
@@ -304,29 +302,26 @@ $data = adminInfo();
           const otpModal = bootstrap.Modal.getOrCreateInstance(otpModalEl);
           otpModal.hide();
 
-          // Attach the event only once — directly in submit handler
           otpModalEl.addEventListener("hidden.bs.modal", function onOtpModalHidden() {
             otpModalEl.removeEventListener("hidden.bs.modal", onOtpModalHidden);
-
             const changePasswordModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("changePasswordModal"));
             $(".modal-backdrop").remove();
             $("body").removeClass("modal-open");
             changePasswordModal.show();
           });
-
         } else {
           $("#otpError").removeClass("d-none");
           startResendCountdown();
         }
       });
 
-      $("#resendBtn").click(function() {
+      $("#resendBtn").click(function () {
         generatedOTP = "654321";
         Swal.fire("OTP Resent", "New OTP is: " + generatedOTP, "info");
         startResendCountdown();
       });
 
-      $("#changePasswordForm").submit(function(e) {
+      $("#changePasswordForm").submit(function (e) {
         e.preventDefault();
         const current = $("#currentPassword").val().trim();
         const newPass = $("#newPassword").val().trim();
