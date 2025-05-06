@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Address Book</title>
     <link href="../Bootstrap/bootstrap.min.css" rel="stylesheet">
-   
 </head>
 <body>
 
@@ -60,7 +59,7 @@
 <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 
 <script>
-  const endpoint = '../dbfunction/useraddressfunction.php';
+  const endpoint = './dbfunction/useraddressfunction.php';
 
   function loadAddresses() {
     $.post(endpoint, { action: 'get_all' }, function (response) {
@@ -147,7 +146,43 @@
 
     $('#addressFormElement').submit(function (e) {
       e.preventDefault();
-      const action = $('#address_id').val() ? 'update'
-    });
 
+      if (!$('#address').val().trim() || !$('#landmark').val().trim() ||
+          !$('#city').val().trim() || !$('#state').val().trim() ||
+          !$('#postalCode').val().trim() || !$('#country').val().trim() ||
+          !$('input[name="type"]:checked').val()) {
+        alert('Please fill all fields and select an address type.');
+        return;
+      }
+
+      const action = $('#address_id').val() ? 'update' : 'add';
+
+      const formData = {
+        action: action,
+        address_id: $('#address_id').val(),
+        address: $('#address').val().trim(),
+        landmark: $('#landmark').val().trim(),
+        city: $('#city').val().trim(),
+        state: $('#state').val().trim(),
+        postalCode: $('#postalCode').val().trim(),
+        country: $('#country').val().trim(),
+        type: $('input[name="type"]:checked').val()
+      };
+
+      $.post(endpoint, formData, function (response) {
+        const res = JSON.parse(response);
+        if (res.success) {
+          $('#addressFormElement')[0].reset();
+          $('#addressForm').hide();
+          $('#addAddressBtn').show();
+          loadAddresses();
+        } else {
+          alert(res.message);
+        }
+      });
+    });
   });
+</script>
+
+</body>
+</html>

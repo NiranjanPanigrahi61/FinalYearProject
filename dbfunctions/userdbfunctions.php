@@ -95,4 +95,31 @@ function userLogin() {
         echo json_encode(["success" => false, "message" => "An error occurred while logging in."]);
     }
 }
+//get user by id
+function GetuserId($id) { 
+    global $conn;
+    try {
+        $qry = "SELECT email,phone FROM user WHERE userid = ?"; 
+        $stmt = $conn->prepare($qry);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+
+    } catch (Exception $e) {
+        die("Error: " . $e->getMessage());
+    }
+    // Do NOT close connection here — it's global and may be used elsewhere
+}
+
+
+
+
+
+
 ?>

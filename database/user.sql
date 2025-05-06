@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2025 at 07:46 AM
+-- Generation Time: May 06, 2025 at 12:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,20 +28,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `profilepic` varchar(255) NOT NULL
+  `userid` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(10) NOT NULL,
+  `password` varchar(10) NOT NULL,
+  `profile_photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `phone`, `email`, `password`, `profilepic`) VALUES
-(1, 'Niranjan', '5675467764', 'niranjan@gmail.com', 'Niranjan@123', '');
+INSERT INTO `user` (`userid`, `username`, `email`, `phone`, `password`, `profile_photo`) VALUES
+(1, 'subha', 'subha@gmail.com', '8457863222', '123456', ''),
+(2, 'behera', 'behera@gmail.com', '4563217890', '2025', ''),
+(3, 'aaaaaaaa', 'aaaaaaa@gmail.com', '9963214567', 'Subha@12', '');
 
 --
 -- Indexes for dumped tables
@@ -51,8 +53,7 @@ INSERT INTO `user` (`id`, `name`, `phone`, `email`, `password`, `profilepic`) VA
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `phone` (`phone`,`email`);
+  ADD PRIMARY KEY (`userid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -62,7 +63,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
