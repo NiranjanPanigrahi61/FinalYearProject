@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2025 at 06:54 AM
+-- Generation Time: May 06, 2025 at 12:54 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,7 +39,7 @@ CREATE TABLE `admininfo` (
 --
 
 INSERT INTO `admininfo` (`username`, `email`, `password`, `adminimage`) VALUES
-('Admin2k25', 'Admin1234@gmail.com', 'Admin@123', '');
+('Admin2k25', 'abakery205@gmail.com', 'Admin@123', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/admin/1746359624-Cookie_category.jpg');
 
 --
 -- Indexes for dumped tables

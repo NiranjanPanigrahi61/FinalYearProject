@@ -109,7 +109,7 @@ $data = adminInfo();
               </form>
 
               <div class="text-center">
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#otpModal">
+                <button class="btn btn-warning" id="changePasswordBtn">
                   Change Password
                 </button>
               </div>
@@ -306,36 +306,84 @@ $data = adminInfo();
         });
       });
 
+      $("#changePasswordBtn").click(function() {
+        $.ajax({
+          url: "../../mail/sendOTP.php",
+          type: "POST",
+          data: {
+            email: "<?php echo $res['email']; ?>"
+          },
+          success: function(res) {
+            console.log(res);
+            const data = JSON.parse(res);
+            if (data.status === "success") {
+              Swal.fire("OTP Sent", "A new OTP has been sent to your email.", "info").then(() => {
+                const otpModal = new bootstrap.Modal(document.getElementById("otpModal"));
+                otpModal.show();
+                startResendCountdown(); // Restart countdown on each send
+              });
+            } else {
+              Swal.fire("Error", "Failed to send OTP: " + data.message, "error");
+            }
+          },
+          error: function(xhr, status, error) {
+            Swal.fire("Error", "An unexpected error occurred: " + error, "error");
+          }
+        });
+      });
+
 
 
       $("#otpForm").submit(function(e) {
         e.preventDefault();
         const enteredOtp = $("#otpInput").val().trim();
 
-        if (enteredOtp === generatedOTP) {
-          $("#otpError").addClass("d-none");
+        $.post("../../mail/verifyOtp.php", {
+          otp: enteredOtp
+        }, function(response) {
+          const data = JSON.parse(response);
+          if (data.status === "success") {
+            $("#otpError").addClass("d-none");
 
-          const otpModalEl = document.getElementById("otpModal");
-          const otpModal = bootstrap.Modal.getOrCreateInstance(otpModalEl);
-          otpModal.hide();
+            const otpModalEl = document.getElementById("otpModal");
+            const otpModal = bootstrap.Modal.getOrCreateInstance(otpModalEl);
+            otpModal.hide();
 
-          otpModalEl.addEventListener("hidden.bs.modal", function onOtpModalHidden() {
-            otpModalEl.removeEventListener("hidden.bs.modal", onOtpModalHidden);
-            const changePasswordModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("changePasswordModal"));
-            $(".modal-backdrop").remove();
-            $("body").removeClass("modal-open");
-            changePasswordModal.show();
-          });
-        } else {
-          $("#otpError").removeClass("d-none");
-          startResendCountdown();
-        }
+            otpModalEl.addEventListener("hidden.bs.modal", function onOtpModalHidden() {
+              otpModalEl.removeEventListener("hidden.bs.modal", onOtpModalHidden);
+              const changePasswordModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("changePasswordModal"));
+              $(".modal-backdrop").remove();
+              $("body").removeClass("modal-open");
+              changePasswordModal.show();
+            });
+          } else {
+            $("#otpError").removeClass("d-none");
+            startResendCountdown();
+          }
+        });
+
       });
 
       $("#resendBtn").click(function() {
-        generatedOTP = "654321";
-        Swal.fire("OTP Resent", "New OTP is: " + generatedOTP, "info");
-        startResendCountdown();
+        $.ajax({
+          url: "../../mail/sendOTP.php",
+          type: "POST",
+          data: {
+            email: "<?php echo $res['email']; ?>"
+          },
+          success: function(res) {
+            const data = JSON.parse(res);
+            if (data.status === "success") {
+              Swal.fire("OTP Sent", "A new OTP has been sent to your email.", "info");
+              startResendCountdown();
+            } else {
+              Swal.fire("Error", "Failed to send OTP: " + data.message, "error");
+            }
+          },
+          error: function(xhr, status, error) {
+            Swal.fire("Error", "An unexpected error occurred: " + error, "error");
+          }
+        });
       });
 
       $("#changePasswordForm").submit(function(e) {
