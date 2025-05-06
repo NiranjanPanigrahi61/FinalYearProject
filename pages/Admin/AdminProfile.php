@@ -202,7 +202,7 @@ $data = adminInfo();
       }, 1000);
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
       startResendCountdown();
 
       originalData = {
@@ -211,27 +211,27 @@ $data = adminInfo();
         profileImage: $("#profileImage").attr("src"),
       };
 
-      $("#profileImageInput").change(function () {
+      $("#profileImageInput").change(function() {
         const file = this.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             $("#profileImage").attr("src", e.target.result);
           };
           reader.readAsDataURL(file);
         }
       });
 
-      $("#adminName").click(function () {
+      $("#adminName").click(function() {
         $(this).addClass("d-none");
-        $("#nameInput").removeClass("d-none").focus().blur(function () {
+        $("#nameInput").removeClass("d-none").focus().blur(function() {
           const name = $(this).val();
           $("#adminName").html(name + ' <i class="bi bi-pencil-fill"></i>').removeClass("d-none");
           $(this).addClass("d-none");
         });
       });
 
-      $("#togglePasswordBtn").click(function () {
+      $("#togglePasswordBtn").click(function() {
         const icon = $(this).find("i");
         if (!$("#passwordInput").hasClass("d-none")) {
           const input = $("#passwordInput");
@@ -243,7 +243,7 @@ $data = adminInfo();
         icon.toggleClass("bi-eye-fill bi-eye-slash-fill");
       });
 
-      $("#profileForm").submit(function (e) {
+      $("#profileForm").submit(function(e) {
         e.preventDefault();
 
         const currentData = {
@@ -271,27 +271,44 @@ $data = adminInfo();
           data: formData,
           contentType: false,
           processData: false,
-          success: function (response) {
+          success: function(response) {
             Swal.fire("Success", "Changes saved!", "success");
-            originalData = { ...currentData };
+            originalData = {
+              ...currentData
+            };
           },
-          error: function () {
+          error: function() {
             Swal.fire("Error", "Server error occurred.", "error");
           },
         });
       });
 
-      $("#logoutBtn").click(function () {
+      $("#logoutBtn").click(function() {
         Swal.fire({
-          title: "Logged out!",
-          icon: "info",
-          confirmButtonText: "OK",
-        }).then(() => {
-          window.location.href = "/login";
+          title: "Are you sure?",
+          text: "Do you really want to logout?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, Logout",
+          cancelButtonText: "Cancel",
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "Logged out!",
+              icon: "info",
+              timer: 1000,
+              showConfirmButton: false
+            }).then(() => {
+              window.location.href = "../../dbfunctions/logout.php"; // Adjust path as needed
+            });
+          }
         });
       });
 
-      $("#otpForm").submit(function (e) {
+
+
+      $("#otpForm").submit(function(e) {
         e.preventDefault();
         const enteredOtp = $("#otpInput").val().trim();
 
@@ -315,13 +332,13 @@ $data = adminInfo();
         }
       });
 
-      $("#resendBtn").click(function () {
+      $("#resendBtn").click(function() {
         generatedOTP = "654321";
         Swal.fire("OTP Resent", "New OTP is: " + generatedOTP, "info");
         startResendCountdown();
       });
 
-      $("#changePasswordForm").submit(function (e) {
+      $("#changePasswordForm").submit(function(e) {
         e.preventDefault();
         const current = $("#currentPassword").val().trim();
         const newPass = $("#newPassword").val().trim();
