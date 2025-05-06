@@ -37,6 +37,7 @@
                         <div class="row g-0">
                             <div class="col-md-6 d-none d-md-block login-image">
                                 <!-- image -->
+                                <img src="../../assets/adminlogin.jpg" alt="User Login" class="img-fluid w-100 h-100" style="object-fit: cover;">
                             </div>
                             <div class="col-md-6 p-4">
                                 <h3 class="text-center mb-4" style="color: #D02964;">Admin Login</h3>
