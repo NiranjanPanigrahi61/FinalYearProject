@@ -11,9 +11,19 @@
             background-color: #D02964;
         }
 
-        .login-image {
-            background: url('admin-image.png') no-repeat center center;
-            background-size: cover;
+        .login-img {
+            height: 400px;
+            object-fit: cover;
+            width: 100%;
+            border-top-left-radius: 0.375rem;
+            border-bottom-left-radius: 0.375rem;
+        }
+
+        @media (max-width: 768px) {
+            .login-img {
+                height: auto;
+                border-radius: 0;
+            }
         }
 
         .form-control:focus {
@@ -29,17 +39,16 @@
 </head>
 
 <body>
-    <div class="d-flex align-items-center justify-content-center vh-100 ">
+    <div class="d-flex align-items-center justify-content-center vh-100">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
                     <div class="card overflow-hidden shadow-sm border-0 rounded-3">
                         <div class="row g-0">
-                            <div class="col-md-6 d-none d-md-block login-image">
-                                <!-- image -->
-                                <img src="../../assets/adminlogin.jpg" alt="User Login" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                            <div class="col-md-6 d-none d-md-block">
+                                <img src="../../assets/adminlogin.jpg" alt="Admin Login" class="login-img">
                             </div>
-                            <div class="col-md-6 p-4">
+                            <div class="col-md-6 p-4 d-flex flex-column justify-content-center">
                                 <h3 class="text-center mb-4" style="color: #D02964;">Admin Login</h3>
                                 <form id="adminLoginForm" method="POST">
                                     <div class="mb-3">
@@ -90,7 +99,7 @@
             passwordError.innerText = "";
             serverError.innerText = "";
 
-            if (!email.match(/^[a-zA-Z0-9_.]{3,}@[a-zA-Z.]{3,12}.[a-zA-Z]{2,5}$/)) {
+            if (!email.match(/^[a-zA-Z0-9_.]{3,}@[a-zA-Z.]{3,12}\.[a-zA-Z]{2,5}$/)) {
                 emailError.innerText = "Please enter a valid email address.";
                 isValid = false;
             }
@@ -110,9 +119,9 @@
                     success: function(data) {
                         if(data){
                             window.location.href="./dashboard.php";
-                        }else{
-                            serverError.textContent="Invalid Admin";
-                        }                     
+                        } else {
+                            serverError.textContent = "Invalid Admin";
+                        }
                     },
                     error: function(xhr, status, error) {
                         serverError.innerText = "An error occurred. Please try again later.";
@@ -124,5 +133,4 @@
 
     <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
