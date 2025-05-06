@@ -1,6 +1,7 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/config.php";
+include_once "./../component/user_nav.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +38,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/con
                         <div class="row g-0">
                             <div class="col-md-6 d-none d-md-block login-image">
                                 <!-- image -->
-                                <img src="./" alt="User Login" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                <img src="../assets/login.jpg" alt="User Login" class="img-fluid w-100 h-100" style="object-fit: cover;">
                             </div>
                             <div class="col-md-6 p-4">
                                 <h3 class="text-center mb-4" style="color: #D02964;">User Login</h3>
