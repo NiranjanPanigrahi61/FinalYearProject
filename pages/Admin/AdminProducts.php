@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["loggedin"])){
+    header("location:AdminLogin.php");
+    exit();
+}
 require_once "../../dbfunctions/adminfunctions.php";
 
 include_once "./AdminTopNavBar.php";
@@ -25,7 +30,7 @@ $data = showproduct();
 
         @media (max-width: 768px) {
             .product-block {
-                margin-left: 0;
+                margin-left: 0px;
                 margin-top: 86px;
                 width: 100%;
             }
@@ -44,7 +49,7 @@ $data = showproduct();
 
 <body>
     <div class="container product-block p-5">
-        <div class="input-group mb-3 w-75">
+        <div class="input-group mb-3 w-75 ms-0">
             <div class="form-floating flex-grow-1">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search product name...">
                 <label for="searchInput">Search product name...</label>
@@ -52,7 +57,7 @@ $data = showproduct();
             <button class="btn btn-danger" id="searchBtn" type="button">Search</button>
         </div>
 
-        <div class="row g-2" id="productRow">
+        <div class="row g-3" id="productRow">
             <?php
             if ($data) {
                 $stat = false;
@@ -62,11 +67,10 @@ $data = showproduct();
             ?>
                         <div class="col-md-4 product-card">
                             <div class="card" style="width: 18rem;">
-                                <img src="<?php //echo $res['table_image']; 
-                                            ?>" class="card-img-top" alt="...">
+                                <img src="<?php echo $res['table_img'];?>" class="card-img-top" alt="<?php echo $res['name']."_img";?>">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $res['name']; ?></h5>
-                                    <a href="#" class="btn mx-auto d-block">Manage</a>
+                                    <a href="./AdminManageProduct.php?id=<?php echo $res['table_name']?>" class="btn mx-auto d-block">Manage</a>
                                 </div>
                             </div>
                         </div>

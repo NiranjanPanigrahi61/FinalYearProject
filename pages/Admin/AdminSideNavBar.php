@@ -51,12 +51,14 @@
                     <ul class="list-unstyled mb-0">
                         <li><a class="nav-link" href="./addCategory.php">Add Category</a></li>
                         <li><a class="nav-link" href="#">Remove Category</a></li>
+                        <li><a class="nav-link" href="./AdminAddProductForm.php">Add Product</a></li>
+                        <li><a class="nav-link" href="#">Remove Product</a></li>
                     </ul>
                 </div>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">Customize Cake</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Feedbacks</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="./AdminProfile.php">Profile</a></li>
         </ul>
     </div>
 
@@ -77,16 +79,23 @@
                 <li class="nav-item"><a class="nav-link" href="./items.php">Items</a></li>
                 <li class="nav-item"><a class="nav-link" href="./AdminProducts.php">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Inventory</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="./addCategory.php">Add Category</a></li>
-                        <li><a class="dropdown-item" href="#">Remove Category</a></li>
+                <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#inventoryCollapseDesktop" role="button"
+                    aria-expanded="false" aria-controls="inventoryCollapseDesktop">
+                    Inventory
+                </a>
+                <div class="collapse ps-3" id="inventoryCollapseDesktop">
+                    <ul class="list-unstyled mb-0">
+                        <li><a class="nav-link" href="./addCategory.php">Add Category</a></li>
+                        <li><a class="nav-link" href="#">Remove Category</a></li>
+                        <li><a class="nav-link" href="./AdminAddProductForm.php">Add Product</a></li>
+                        <li><a class="nav-link" href="#">Remove Product</a></li>
                     </ul>
-                </li>
+                </div>
+            </li>
                 <li class="nav-item"><a class="nav-link" href="#">Customize Cake</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Feedbacks</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="./AdminProfile.php">Profile</a></li>
             </ul>
         </div>
     </div>

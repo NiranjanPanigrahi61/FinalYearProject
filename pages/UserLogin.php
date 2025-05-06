@@ -5,27 +5,28 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/con
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login</title>
-    <link href="./../Bootstrap/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .body {
-            background-color: #E33F5C;
-        }
-        .login-image {
-            background: url('user-image.png') no-repeat center center;
-            background-size: cover;
-        }
-        .form-control:focus {
-            border-color: #D02964;
-            box-shadow: 0 0 5px rgba(242, 11, 92, 0.5);
-        }
-        .btn:hover {
-            background-color: #ED555A !important;
-            border-color: #b02454 !important;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login</title>
+  <link href="./../Bootstrap/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .body {
+      background-color: #E33F5C;
+    }
+    .form-control:focus {
+      border-color: #D02964;
+      box-shadow: 0 0 5px rgba(242, 11, 92, 0.5);
+    }
+    .btn:hover {
+      background-color: #ED555A !important;
+      border-color: #b02454 !important;
+    }
+    .login-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body >
     <div class="body d-flex align-items-center justify-content-center vh-100">

@@ -17,9 +17,9 @@
                     <ul class="list-unstyled">
                         <li><a href="<?=BASE_URL?>/pages/Admin/AdminLogin.php"
                                 class="text-white text-decoration-none">Admin</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Customized Cake</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">About</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Contact</a></li>
+                        <li><a href="<?= BASE_URL ?>pages/Customize.php" class="text-white text-decoration-none">Customized Cake</a></li>
+                        <li><a href="<?= BASE_URL ?>component/about.php" class="text-white text-decoration-none">About</a></li>
+                        <li><a href="<?= BASE_URL ?>component/contactus.php" class="text-white text-decoration-none">Contact</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Cart</a></li>
                     </ul>
                 </div>
@@ -29,8 +29,8 @@
                     <div class="contactinfo ps-5">
                         <p>Email:bakery@gmail.com</p>
                         <p>Phone: +91 7208946835</p>
-                        <p>Address: 2 sector 4, Bhubaneswar, India</p>
-                        <a href="" class="text-white text-decoration-none">
+                        <p>Address: Sector 4, Bhubaneswar, India</p>
+                        <a href="<?= BASE_URL ?>component/feedback.php" class="text-white text-decoration-none">
                             <p>feed back</p>
                         </a>
                     </div>

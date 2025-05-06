@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "./dbconnect.php";
 
 $email=$_POST['email'];
@@ -10,6 +11,8 @@ try{
     $stmt->execute();
     $result=$stmt->get_result();
     if($result->num_rows > 0){
+        $_SESSION["loggedin"]=true;
+        $_SESSION["admin"]=$email;
         echo true;
     }else{
         echo false;

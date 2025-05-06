@@ -1,6 +1,7 @@
 <?php
 include_once "../component/user_nav.php";
 include_once "../component/corosol.php";
+include_once "../component/landing_banner.php";
 include_once "../component/ourproduct.php";
 include_once "../component/WhyChooseUs.php";
 include_once "../component/testimonials.php";

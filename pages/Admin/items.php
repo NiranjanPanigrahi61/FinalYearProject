@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["loggedin"])){
+    header("location:AdminLogin.php");
+    exit();
+}
 require_once "../../dbfunctions/adminfunctions.php";
 
 include_once "./AdminTopNavBar.php";
