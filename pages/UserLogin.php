@@ -17,28 +17,12 @@ include_once "./../component/user_nav.php";
       border-color: #D02964;
       box-shadow: 0 0 5px rgba(242, 11, 92, 0.5);
     }
-    .btn-custom {
-      background-color: #D02964;
-      color: white;
-      border-color: #D02964;
-    }
-    .btn-custom:hover {
-      background-color: #ED555A !important;
-      border-color: #b02454 !important;
-      color: white !important;
-    }
     .login-img {
       height: 400px;
       object-fit: cover;
       width: 100%;
       border-top-left-radius: 0.375rem;
       border-bottom-left-radius: 0.375rem;
-    }
-    @media (max-width: 768px) {
-      .login-img {
-        height: auto;
-        border-radius: 0;
-      }
     }
   </style>
 </head>
@@ -69,7 +53,7 @@ include_once "./../component/user_nav.php";
                     <a href="#" style="color: #D02964;">Forgot password?</a>
                   </div>
                   <div class="d-grid">
-                    <button type="submit" class="btn btn-custom">Sign in</button>
+                    <button type="submit" class="btn btn-danger">Sign in</button>
                   </div>
                   <div class="text-center mt-3">
                     <span>Don't have an account? </span>
@@ -93,32 +77,32 @@ include_once "./../component/user_nav.php";
   <script>
     document.getElementById("userLoginForm").addEventListener("submit", function(event) {
       event.preventDefault();
-      
+
       var email = document.getElementById("user-email").value;
       var password = document.getElementById("user-password").value;
       var emailError = document.getElementById("userEmailError");
       var passwordError = document.getElementById("userPasswordError");
       var serverError = document.getElementById("serverError");
-      
+
       emailError.textContent = "";
       passwordError.textContent = "";
       serverError.textContent = "";
-      
+
       var valid = true;
-      
+
       var emailPattern = /^[a-zA-Z0-9_.]{3,}@[a-zA-Z.]{3,12}\.[a-zA-Z]{2,5}$/;
       if (!emailPattern.test(email)) {
         emailError.textContent = "Please enter a valid email address.";
         valid = false;
       }
-      
+
       if (password.length < 6) {
         passwordError.textContent = "Password must be at least 6 characters long.";
         valid = false;
       }
-      
+
       if (!valid) return;
-      
+
       $.ajax({
         url: "../dbfunctions/userdbfunctions.php",
         type: "POST",
