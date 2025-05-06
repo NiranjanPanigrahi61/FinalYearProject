@@ -1,5 +1,6 @@
 <?php
 require_once "dbconnect.php";
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle SignUp or Login based on POST data
@@ -81,10 +82,10 @@ function userLogin() {
             $user = $result->fetch_assoc();
 
             // Start session
-            session_start();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['email'] = $user['email'];
+            $_SESSION['user_id'] = $user['userid'];
+            // $_SESSION['username'] = $user['username'];
+            // $_SESSION['email'] = $user['email'];
+            // $_SESSION['role'] = "user";
 
             echo json_encode(["success" => true]);
         } else {

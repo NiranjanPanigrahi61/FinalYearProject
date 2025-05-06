@@ -13,10 +13,10 @@ include_once "./../config.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
     <style>
-        /* Increase size of nav items */
+        
         .nav-item {
-            font-size: 1.2rem; /* Increased font size */
-            padding: 12px 16px; /* Added more padding */
+            font-size: 1.2rem; 
+            padding: 12px 16px; 
         }
 
         /* Hover Effect Styling */
@@ -88,19 +88,21 @@ include_once "./../config.php";
                         </a>
                     </li>
                 </ul>
+                <?= isset($_SESSION['user_id']) ? '
+                    <ul class="navbar-nav text-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-bold" href="cart.html">
+                                <i class="fa-solid fa-cart-shopping text-white  p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i> 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-bold" href="' . BASE_URL . 'pages/Login_nav.php" title="Profile">
+                                <i class="fa-solid fa-user text-white  p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i>
+                            </a>
+                        </li>
+                    </ul>' : '<a class="nav-link text-white fw-bold" href="UserLogin.php">Login</a>' 
+                ?>
 
-                <ul class="navbar-nav text-center">
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="cart.html">
-                            <i class="fa-solid fa-cart-shopping"></i> Cart
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>pages/UserLogin.php">
-                            <i class="fa-solid fa-user"></i> Account
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
     </nav>

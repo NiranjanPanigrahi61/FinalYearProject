@@ -1,10 +1,8 @@
 <?php
-include_once "../../config.php";
+include_once "../config.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,7 +94,7 @@ include_once "../../config.php";
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>pages/UserLogin.php" title="Profile">
+                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>pages/profile_section.php" title="Profile">
                         <i class="fa-solid fa-user text-white  p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i>
                         </a>
                     </li>

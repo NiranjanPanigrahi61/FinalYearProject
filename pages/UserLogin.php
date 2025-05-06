@@ -1,6 +1,6 @@
 <?php
-// include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/config.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/component/user_nav.php";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,6 +115,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/com
                 "password": password
             },
             success: function(data) {
+                console.log(`${email}`);
+                
                 let response = JSON.parse(data);
                 if (response.success) {
                     
@@ -135,8 +137,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/FinalYearProject/FinalYearProject/com
     </script>
     
     <script src="./../Bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- Add this line right before your closing </body> tag in UserLogin.php -->
+    <script src="otp_login.js"></script>
 </body>
 </html>
 <?php
 include_once "./../component/footer.php";
-?>
+?> 
+

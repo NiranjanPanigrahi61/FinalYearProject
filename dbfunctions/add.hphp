@@ -1,0 +1,143 @@
+<?php
+session_start();
+require_once "dbconnect.php";
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(["success" => false, "message" => "User not logged in."]);
+    exit;
+}
+
+// Get all POST variables safely
+$action           = $_POST['action'] ?? '';
+$address_id       = $_POST['address_id'] ?? null;
+$delivery_address = $_POST['address'] ?? null;
+$landmark         = $_POST['landmark'] ?? null;
+$city             = $_POST['city'] ?? null;
+$state            = $_POST['state'] ?? null;
+$pincode          = $_POST['postalCode'] ?? null;
+$country          = $_POST['country'] ?? null;
+$type             = $_POST['type'] ?? null;
+$user_id          = $_SESSION['user_id'];
+
+echo " ".$landmark;
+
+// ROUTE BASED ON ACTION
+switch ($action) {
+    case 'add':
+        addAddress($user_id, $delivery_address, $landmark, $city, $state, $pincode, $country, $type);
+        break;
+
+    case 'update':
+        updateAddress($user_id, $address_id, $delivery_address, $landmark, $city, $state, $pincode, $country, $type);
+        break;
+
+    case 'delete':
+        deleteAddress($user_id, $address_id);
+        break;
+
+    case 'get_all':
+        displayAddress($user_id);
+        break;
+
+    case 'get_single':
+        getSingleAddress($user_id, $address_id);
+        break;
+
+    default:
+        echo json_encode(["success" => false, "message" => "Invalid action."]);
+        break;
+}
+
+
+// === FUNCTION DEFINITIONS ===
+
+function addAddress($user_id, $address, $landmark, $city, $state, $pincode, $country, $type) {
+    global $conn;
+
+    if (!$address || !$landmark || !$city || !$state || !$pincode || !$country || !$type) {
+        echo json_encode(["success" => false, "message" => "Missing required fields."]);
+        return;
+    }
+
+    $qry = "INSERT INTO address (user_id, delivery_address, landmark, city, state, pincode, country, type)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($qry);
+    $stmt->bind_param("isssssss", $user_id, $address, $landmark, $city, $state, $pincode, $country, $type);
+
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Address added successfully."]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Failed to add address: " . $stmt->error]);
+    }
+    
+
+    $stmt->close();
+}
+
+function updateAddress($user_id, $address_id, $address, $landmark, $city, $state, $pincode, $country, $type) {
+    global $conn;
+
+    if (!$address_id || !$address || !$landmark || !$city || !$state || !$pincode || !$country || !$type) {
+        echo json_encode(["success" => false, "message" => "Missing required fields."]);
+        return;
+    }
+
+    $qry = "UPDATE address SET delivery_address = ?, landmark = ?, city = ?, state = ?, pincode = ?, country = ?, type = ?
+            WHERE address_id= ? AND user_id = ?";
+    $stmt = $conn->prepare($qry);
+    $stmt->bind_param("sssssssii", $address, $landmark, $city, $state, $pincode, $country, $type, $address_id, $user_id);
+
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Address updated successfully."]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Failed to update address."]);
+    }
+
+    $stmt->close();
+}
+
+function deleteAddress($user_id, $address_id) {
+    global $conn;
+
+    if (!$address_id) {
+        echo json_encode(["success" => false, "message" => "Address ID is required."]);
+        return;
+    }
+
+    $qry = "DELETE FROM address WHERE address_id = ? AND user_id = ?";
+    $stmt = $conn->prepare($qry);
+    $stmt->bind_param("ii", $address_id, $user_id);
+
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Address deleted successfully."]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Failed to delete address."]);
+    }
+
+    $stmt->close();
+}
+
+function displayAddress($user_id) {
+    global $conn;
+
+    $qry = "SELECT address_id, delivery_address, landmark, city, state, pincode, country, type FROM address WHERE user_id = ?";
+    $stmt = $conn->prepare($qry);
+    $stmt->bind_param("i", $user_id);
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        $addresses = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $addresses[] = $row;
+        }
+
+        echo json_encode(["success" => true, "data" => $addresses]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Failed to fetch addresses."]);
+    }
+
+    $stmt->close();
+
+
+?>
