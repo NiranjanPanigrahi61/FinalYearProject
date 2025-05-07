@@ -24,18 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cake`
+-- Table structure for table `cookie`
 --
 
-CREATE TABLE `cake` (
+CREATE TABLE `cookie` (
   `id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
-  `weight` varchar(50) DEFAULT NULL,
-  `size` varchar(50) DEFAULT NULL,
+  `quantity` int(11) DEFAULT 0,
   `image` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp(),
+  `status` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -43,9 +43,9 @@ CREATE TABLE `cake` (
 --
 
 --
--- Indexes for table `cake`
+-- Indexes for table `cookie`
 --
-ALTER TABLE `cake`
+ALTER TABLE `cookie`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -53,9 +53,9 @@ ALTER TABLE `cake`
 --
 
 --
--- AUTO_INCREMENT for table `cake`
+-- AUTO_INCREMENT for table `cookie`
 --
-ALTER TABLE `cake`
+ALTER TABLE `cookie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

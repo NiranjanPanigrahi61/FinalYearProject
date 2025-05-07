@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2025 at 04:55 PM
+-- Generation Time: May 07, 2025 at 08:39 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,20 +33,17 @@ CREATE TABLE `user` (
   `email` varchar(100) NOT NULL,
   `phone` varchar(10) NOT NULL,
   `password` varchar(10) NOT NULL,
-  `profile_photo` varchar(255) NOT NULL,
-  `dob` date DEFAULT NULL
+  `profile_photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `username`, `email`, `phone`, `password`, `profile_photo`, `dob`) VALUES
-(1, 'subhendu', 'subha@gmail.com', '8457863220', 'SSBsubha@1', '1746556167_hope-everything-right-4k-5l-1366x768.jpg', '2025-02-07'),
-(2, 'behera', 'behera@gmail.com', '4563217890', '123456', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/user//1746628092-creamcookie.png', '2025-05-04'),
-(3, 'aaaaaaaa', 'aaaaaaa@gmail.com', '9963214567', 'Subha@12', '', NULL),
-(4, 'niranjan panigrahi', 'nira@gmail.com', '9632587410', 'Nira@1', '1746564229_76035-Logo-GlowWindows-4k-Ultra-HD-Wallpaper.jpg', '2025-03-07'),
-(5, 'nala', 'abc@gmail.com', '123456789', 'Abc@123', '1746624855_strawberriescookie.png', '2025-01-05');
+INSERT INTO `user` (`userid`, `username`, `email`, `phone`, `password`, `profile_photo`) VALUES
+(1, 'subha', 'subha@gmail.com', '8457863222', '123456', ''),
+(2, 'behera', 'behera@gmail.com', '4563217890', '2025', ''),
+(3, 'aaaaaaaa', 'aaaaaaa@gmail.com', '9963214567', 'Subha@12', '');
 
 --
 -- Indexes for dumped tables
@@ -66,7 +63,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
