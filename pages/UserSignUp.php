@@ -5,61 +5,57 @@ include_once "./../component/user_nav.php";
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Signup</title>
-    <link href="./../Bootstrap/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .body {
-            background-color: #E33F5C;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Signup</title>
+  <link href="./../Bootstrap/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .body {
+      background-color: #E33F5C;
+    }
 
-        .signup-container {
-            display: flex;
-            max-width: 900px;
-            margin: 0px auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+    .signup-container {
+      display: flex;
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
 
-        .form-section {
-            padding: 40px;
-            width: 50%;
-        }
+    .form-section {
+      padding: 40px;
+      width: 50%;
+    }
 
-        .form-control:focus {
-            border-color: #D02964;
-            box-shadow: 0 0 5px rgba(242, 11, 92, 0.5);
-        }
+    .form-control:focus {
+      border-color: #D02964;
+      box-shadow: 0 0 5px rgba(242, 11, 92, 0.5);
+    }
 
-        .info-section {
-            width: 50%;
-            background: #FC8F59;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            padding: 40px;
-        }
+    .info-section {
+      width: 50%;
+      background: #FC8F59;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 40px;
+    }
 
-        .btn-social {
-            width: 100%;
-            margin-bottom: 10px;
-        }
+    .btn:hover {
+      background-color: #ED555A !important;
+      border-color: #b02454 !important;
+    }
 
-        .btn:hover {
-            background-color: #ED555A;
-        }
-
-        .error {
-            color: red;
-            font-size: 0.875em;
-        }
-    </style>
+    .error {
+      color: red;
+      font-size: 0.875em;
+    }
+  </style>
 </head>
 
 <body>
@@ -151,7 +147,7 @@ include_once "./../component/user_nav.php";
             confirmPasswordError.textContent = "";
             genericError.textContent = "";
 
-            var valid = true;
+      var valid = true;
 
             if (username.trim() === "") {
                 usernameError.textContent = "Username is required.";
@@ -207,12 +203,12 @@ include_once "./../component/user_nav.php";
                 valid = false;
             }
 
-            if (confirmPassword !== password) {
-                confirmPasswordError.textContent = "Passwords do not match.";
-                valid = false;
-            }
+      if (confirmPassword !== password) {
+        confirmPasswordError.textContent = "Passwords do not match.";
+        valid = false;
+      }
 
-            if (!valid) return;
+      if (!valid) return;
 
             $.ajax({
                 url: "../dbfunctions/userdbfunctions.php",
@@ -248,3 +244,4 @@ include_once "./../component/user_nav.php";
 <?php
 include_once "./../component/footer.php";
 ?>
+

@@ -99,7 +99,7 @@ include_once "./../config.php";
                                 <i class="fa-solid fa-user text-white  p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i>
                             </a>
                         </li>
-                    </ul>' : '<a class="nav-link text-white fw-bold" href="UserLogin.php">Login</a>' 
+                    </ul>' : '<a class="nav-link text-white fw-bold" href="' . BASE_URL . 'pages/UserLogin.php">Login</a>' 
                 ?>
 
             </div>
