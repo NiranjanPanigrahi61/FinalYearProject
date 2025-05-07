@@ -1,5 +1,5 @@
 <?php
-include 'Login_nav.php';
+include '../component/user_nav.php';
 ?>
 
 <!DOCTYPE html>

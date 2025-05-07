@@ -11,7 +11,6 @@ include_once "./../config.php";
     <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
     <style>
         
         .nav-item {
@@ -96,7 +95,7 @@ include_once "./../config.php";
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white fw-bold" href="' . BASE_URL . 'pages/Login_nav.php" title="Profile">
+                            <a class="nav-link text-white fw-bold" href="' . BASE_URL . 'pages/profile_section.php" title="Profile">
                                 <i class="fa-solid fa-user text-white  p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i>
                             </a>
                         </li>

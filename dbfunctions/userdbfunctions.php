@@ -12,20 +12,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // ======================= USER SIGNUP ======================= //
-function userSignUp(){
+function userSignUp() {
     global $conn;
 
     $username = $_POST['username'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $password = $_POST['password'];  // Plain-text password
+    $dob = $_POST['dob'] ?? null;    // New field (DOB)
 
     if (emailExists($email, $phone)) {
         echo json_encode(["success" => false, "message" => "Email or phone already exists!"]);
         exit;
     }
 
-    $status = addUser($username, $email, $phone, $password);
+    $status = addUser($username, $email, $phone, $password, $dob);
     if ($status) {
         echo json_encode(["success" => true, "message" => "Signup successful! Redirecting to login page..."]);
     } else {
@@ -33,16 +34,15 @@ function userSignUp(){
     }
 }
 
-function addUser($username, $email, $phone, $password) {
+function addUser($username, $email, $phone, $password, $dob) {
     global $conn;
 
     try {
-        $qry = "INSERT INTO user (username, phone, email, password) VALUES (?, ?, ?, ?)";
+        $qry = "INSERT INTO user (username, phone, email, password, dob) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($qry);
-        $stmt->bind_param("ssss", $username,$phone, $email, $password);
+        $stmt->bind_param("sssss", $username, $phone, $email, $password, $dob);
 
-        $status = $stmt->execute();
-        return $status;
+        return $stmt->execute();
     } catch (Exception $e) {
         return false;
     }
@@ -81,12 +81,7 @@ function userLogin() {
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
 
-            // Start session
             $_SESSION['user_id'] = $user['userid'];
-            // $_SESSION['username'] = $user['username'];
-            // $_SESSION['email'] = $user['email'];
-            // $_SESSION['role'] = "user";
-
             echo json_encode(["success" => true]);
         } else {
             echo json_encode(["success" => false, "message" => "Invalid email or password."]);
@@ -95,31 +90,4 @@ function userLogin() {
         echo json_encode(["success" => false, "message" => "An error occurred while logging in."]);
     }
 }
-//get user by id
-function GetuserId($id) { 
-    global $conn;
-    try {
-        $qry = "SELECT email,phone FROM user WHERE userid = ?"; 
-        $stmt = $conn->prepare($qry);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            return $result;
-        } else {
-            return false;
-        }
-
-    } catch (Exception $e) {
-        die("Error: " . $e->getMessage());
-    }
-    // Do NOT close connection here — it's global and may be used elsewhere
-}
-
-
-
-
-
-
 ?>

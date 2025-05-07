@@ -1,57 +1,164 @@
-<h3 class="mb-4">👤 My Profile</h3>
+<?php
+include '../dbfunctions/dbconnect.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
-<div class="card mb-4">
-  <div class="row g-0 align-items-center">
-    <div class="col-md-3 text-center p-3">
-      <img src="https://via.placeholder.com/120" class="rounded-circle img-fluid" alt="Profile Photo">
+if (!isset($_SESSION['user_id'])) {
+    die("Access denied. Please log in.");
+}
+
+$userid = $_SESSION['user_id'];
+$username = $email = $phone = $profile_photo = $dob = "";
+$swalType = $swalMsg = "";
+
+// Fetch user details
+$q = $conn->prepare("SELECT username, email, phone, profile_photo, dob FROM user WHERE userid = ?");
+$q->bind_param("i", $userid);
+$q->execute();
+$res = $q->get_result();
+
+$dobReadonly = false;
+if ($res && $res->num_rows > 0) {
+    $row = $res->fetch_assoc();
+    $username = $row['username'];
+    $email = $row['email'];
+    $phone = $row['phone'];
+    $profile_photo = $row['profile_photo'];
+    $dob = $row['dob'];
+    $dobReadonly = !empty($dob);
+}
+
+// Handle update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
+    $newUsername = trim($_POST['username']);
+    $newPhone = trim($_POST['phone']);
+    $newDOB = $_POST['dob'];
+    $newPhoto = $profile_photo;
+
+    if (isset($_FILES['profilePhoto']) && $_FILES['profilePhoto']['name']) {
+        $imgTmp = $_FILES['profilePhoto']['tmp_name'];
+        $imgName = time() . "-" . $_FILES['profilePhoto']['name'];
+        require_once "../aws/upload.php";
+        $response = uploadtoS3("user/", $imgTmp, $imgName);
+        
+    }
+
+    if ($dobReadonly) {
+        $stmt = $conn->prepare("UPDATE user SET username=?, phone=?, profile_photo=? WHERE userid=?");
+        $stmt->bind_param("sssi", $newUsername, $newPhone, $response, $userid);
+    } else {
+        $stmt = $conn->prepare("UPDATE user SET username=?, phone=?, profile_photo=?, dob=? WHERE userid=?");
+        $stmt->bind_param("ssssi", $newUsername, $newPhone, $response, $newDOB, $userid);
+    }
+
+    if ($stmt->execute()) {
+        $swalType = "success";
+        $swalMsg = "Profile updated!";
+        $username = $newUsername;
+        $phone = $newPhone;
+        $profile_photo = $newPhoto;
+        if (!$dobReadonly) $dob = $newDOB;
+        $dobReadonly = !empty($dob);
+    } else {
+        $swalType = "error";
+        $swalMsg = "Update failed.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link href="../Bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .card-custom {
+      max-width: 460px;
+      margin: auto;
+      border-radius: 1rem;
+    }
+    .form-control[readonly] {
+      background-color: #f8f9fa;
+    }
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card card-custom shadow p-4">
+  <form method="post" enctype="multipart/form-data">
+    <div class="text-center mb-3">
+      <img src="<?php echo $profile_photo ?: 'default.jpg'; ?>" 
+           class="rounded-circle img-thumbnail profile-img" 
+           alt="Profile Photo">
+      <input type="file" name="profilePhoto" class="form-control mt-2 d-none" id="profilePhoto">
     </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5 class="card-title mb-3">Biswabishal Senapati</h5>
-        <p class="card-text"><strong>Email:</strong> biswabishal@example.com</p>
-        <p class="card-text"><strong>Phone:</strong> +91-9876543210</p>
-        <p class="card-text"><strong>Address:</strong> Silicon University, Bhubaneswar, Odisha</p>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">✏️ Edit Profile</button>
-      </div>
+    <div class="mb-2">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" class="form-control" value="<?php echo $username; ?>" id="username" readonly required>
     </div>
-  </div>
+    <div class="mb-2">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control text-danger fw-bold" value="<?php echo $email; ?>" readonly>
+    </div>
+    <div class="mb-2">
+      <label class="form-label">Phone</label>
+      <input type="text" name="phone" class="form-control" value="<?php echo $phone; ?>" id="phone" readonly required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Date of Birth</label>
+      <input type="date" name="dob" class="form-control" value="<?php echo $dob; ?>" id="dob" <?php echo $dobReadonly ? 'readonly' : ''; ?> required>
+      <?php if (!$dobReadonly): ?>
+        <small class="text-danger">⚠️ Once you set your date of birth, you cannot change it.</small>
+      <?php else: ?>
+        <small class="text-muted">📌 Date of birth is locked after first entry.</small>
+      <?php endif; ?>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-sm btn-warning me-2" id="editBtn">✏️ Edit</button>
+      <button type="submit" name="saveChanges" class="btn btn-sm btn-success d-none" id="saveBtn">💾 Save</button>
+      <button type="button" class="btn btn-sm btn-secondary d-none" id="cancelBtn">❌ Cancel</button>
+    </div>
+  </form>
 </div>
 
-<!-- Edit Profile Modal -->
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <form class="modal-content" method="post" action="#">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="fullName" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="fullName" name="fullName" value="Biswabishal Senapati">
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email" name="email" value="biswabishal@example.com">
-        </div>
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phone</label>
-          <input type="tel" class="form-control" id="phone" name="phone" value="+91-9876543210">
-        </div>
-        <div class="mb-3">
-          <label for="address" class="form-label">Address</label>
-          <textarea class="form-control" id="address" name="address" rows="2">Silicon University, Bhubaneswar, Odisha</textarea>
-        </div>
-      </div>
-      
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success">💾 Save Changes</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-      </div>
-    </form>
-  </div>
-</div>
+<?php if ($swalType): ?>
+<script>
+Swal.fire({
+  icon: "<?php echo $swalType; ?>",
+  title: "<?php echo ucfirst($swalType); ?>",
+  text: "<?php echo $swalMsg; ?>",
+});
+</script>
+<?php endif; ?>
 
-<!-- Bootstrap JS (for modal functionality) -->
-<script src="./Bootstrap/bootstrap.bundle.min.js"></script>
+<script>
+const editBtn = document.getElementById('editBtn');
+const saveBtn = document.getElementById('saveBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const profilePhoto = document.getElementById('profilePhoto');
+const dobInput = document.getElementById('dob');
+const fields = [document.getElementById('username'), document.getElementById('phone')];
+
+editBtn.addEventListener('click', () => {
+  fields.forEach(input => input.removeAttribute('readonly'));
+  if (!dobInput.hasAttribute('readonly')) dobInput.removeAttribute('readonly');
+  profilePhoto.classList.remove('d-none');
+  editBtn.classList.add('d-none');
+  saveBtn.classList.remove('d-none');
+  cancelBtn.classList.remove('d-none');
+});
+
+cancelBtn.addEventListener('click', () => {
+  location.reload();
+});
+</script>
+
+</body>
+</html>
