@@ -192,14 +192,20 @@ $data = adminInfo();
     function startResendCountdown() {
       let seconds = 30;
       $("#resendBtn").prop("disabled", true).html(`Resend OTP (<span id="countdown">${seconds}</span>s)`);
+
+      // Clear any existing timer before starting a new one
+      clearInterval(timer);
+
       timer = setInterval(() => {
         seconds--;
-        $("#countdown").text(seconds);
+        $("#countdown").text(seconds); // Update countdown display
+
+        // When the timer reaches 0, enable the button again and reset the text
         if (seconds <= 0) {
-          clearInterval(timer);
+          clearInterval(timer); // Clear the timer to stop it
           $("#resendBtn").prop("disabled", false).text("Resend OTP");
         }
-      }, 1000);
+      }, 1000); // Update every second
     }
 
     $(document).ready(function() {
@@ -248,13 +254,12 @@ $data = adminInfo();
 
         const currentData = {
           username: $("#nameInput").val(),
-          password: $("#passwordInput").val(),
           profileImage: $("#profileImage").attr("src"),
         };
 
+        // Ensure only changes to the name or profile image trigger saving
         const isChanged =
           currentData.username !== originalData.username ||
-          currentData.password !== originalData.password ||
           currentData.profileImage !== originalData.profileImage;
 
         if (!isChanged) {
@@ -262,11 +267,17 @@ $data = adminInfo();
           return;
         }
 
-        const formData = new FormData(this);
+        const formData = new FormData();
+        formData.append("username", $("#nameInput").val());
         formData.append("oldUrl", oldProfile);
 
+        const imageInput = $("#profileImageInput")[0];
+        if (imageInput.files.length > 0) {
+          formData.append("adminimage", imageInput.files[0]);
+        }
+
         $.ajax({
-          url: "../../dbfunctions/adminProfileUpdate.php",
+          url: "../../dbfunctions/adminProfileUpdate.php", // Assuming your update script
           method: "POST",
           data: formData,
           contentType: false,
@@ -282,6 +293,7 @@ $data = adminInfo();
           },
         });
       });
+
 
       $("#logoutBtn").click(function() {
         Swal.fire({
@@ -392,8 +404,18 @@ $data = adminInfo();
         const newPass = $("#newPassword").val().trim();
         const confirmPass = $("#confirmPassword").val().trim();
 
-        if (newPass.length < 6) {
-          Swal.fire("Error", "New password must be at least 6 characters.", "error");
+        // Password validation regex
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{6,16}$/;
+
+        // Check if new password meets the criteria
+        if (newPass.length < 6 || newPass.length > 16) {
+          Swal.fire("Error", "Password must be between 6 and 16 characters.", "error");
+          return;
+        }
+
+        if (!passwordRegex.test(newPass)) {
+          $("#newPassword").addClass("is-invalid");
+          Swal.fire("Error", "Password must contain at least <br> one uppercase letter(A-Z),<br> one lowercase letter(a-z), <br>one number(0-9) and <br>one special character(!@#$%^&*).", "error");
           return;
         }
 
@@ -404,14 +426,31 @@ $data = adminInfo();
 
         $("#confirmPassword").removeClass("is-invalid");
 
-        actualPassword = newPass;
-        $("#passwordInput").val(newPass);
-        $("#passwordText").text("******");
-        isPasswordVisible = false;
+        $.ajax({
+          url: "../../dbfunctions/AdminChangePassword.php",
+          type: "POST",
+          data: {
+            current: current,
+            new: newPass
+          },
+          success: function(response) {
+            console.log(response);
 
-        Swal.fire("Success", "Password changed successfully!", "success");
-        $(this)[0].reset();
-        bootstrap.Modal.getInstance($("#changePasswordModal")[0]).hide();
+            // const data = JSON.parse(response);
+            if (response.status === "success") {
+              Swal.fire("Success", "Password changed successfully!", "success");
+              $("#passwordInput").val(newPass);
+              $("#passwordText").text("******");
+              $("#changePasswordForm")[0].reset();
+              bootstrap.Modal.getInstance($("#changePasswordModal")[0]).hide();
+            } else {
+              Swal.fire("Error", response.message, "error");
+            }
+          },
+          error: function() {
+            Swal.fire("Error", "Server error. Try again later.", "error");
+          }
+        });
       });
     });
   </script>
