@@ -164,3 +164,7 @@ $categories = category();
 </body>
 
 </html>
+
+<?php 
+include_once "../component/footer.php";
+?>
