@@ -61,7 +61,7 @@ $data = manageProduct($id);
 
 <body>
     <div class="container product-manage-block ps-3 pe-3">
-        <h1>Hello</h1>
+        <h1>Available Product</h1>
 
         <!-- Search Box and a -->
         <div class="d-flex mb-3 justify-content-between align-items-center">

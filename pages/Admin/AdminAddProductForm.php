@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["loggedin"])){
+if (!isset($_SESSION["loggedin"])) {
     header("location:AdminLogin.php");
     exit();
 }
@@ -113,6 +113,7 @@ $data = showItems();
 
     <script src="./../../JQuery/jquery-3.7.1.js"></script>
     <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
@@ -173,7 +174,7 @@ $data = showItems();
                     msg += 'Enter a valid numeric quantity.<br>';
                     isValid = false;
                 }
-                
+
                 if (productname === 'cake') {
                     if (!weight) {
                         msg += 'Weight is required for cake.<br>';
@@ -196,22 +197,49 @@ $data = showItems();
                 }
                 const formData = new FormData(this); // include file and other fields
 
+                Swal.fire({
+                    title: 'Uploading...',
+                    text: 'Please wait while we upload your product.',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
                 $.ajax({
                     url: '../../dbfunctions/AdminAddProduct.php',
                     type: 'POST',
                     data: formData,
                     contentType: false,
                     processData: false,
-                    beforeSend: function() {
-                        $('#msg').html('<div class="alert alert-info w-75">Uploading...</div>');
-                    },
                     success: function(response) {
-                        if(response){
-                            $('#msg').html(`<div class="alert alert-success w-75">${name}Added Successfully.</div>`);
-                            $('#productAddForm')[0].reset();
-                        }else{
-                            $('#msg').html(`<div class="alert alert-danger w-75">${name} Not added...Something Went Wrong.</div>`);
-                            $('#productAddForm')[0].reset();
+                        console.log(response);
+
+                        if (response) {
+                            // Show success message via SweetAlert
+                            Swal.fire({
+                                title: `${name} Added Successfully.`,
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#productAddForm')[0].reset(); // Reset the form
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: `${name} Not added...`,
+                                text: 'Something went wrong.',
+                                icon: 'error',
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#productAddForm')[0].reset(); // Reset the form
+                                }
+                            });
                         }
                     },
                     error: function(xhr, status, error) {
