@@ -24,7 +24,7 @@ if ($res && $res->num_rows > 0) {
     $phone = $row['phone'];
     $profile_photo = $row['profile_photo'];
     $dob = $row['dob'];
-    $dobReadonly = !empty($dob);
+    $dobReadonly = !empty($dob); // If DOB exists, make it read-only
 }
 
 // Handle update
@@ -33,31 +33,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
     $newPhone = trim($_POST['phone']);
     $newDOB = $_POST['dob'];
     $newPhoto = $profile_photo;
+    $response = $profile_photo;
 
+    // Handle profile photo upload
     if (isset($_FILES['profilePhoto']) && $_FILES['profilePhoto']['name']) {
         $imgTmp = $_FILES['profilePhoto']['tmp_name'];
-        $imgName = time() . "-" . $_FILES['profilePhoto']['name'];
+        $imgName = time() . "-" . basename($_FILES['profilePhoto']['name']);
         require_once "../aws/upload.php";
         $response = uploadtoS3("user/", $imgTmp, $imgName);
-        
     }
 
+    // Prepare SQL update query based on DOB status
     if ($dobReadonly) {
+        // Prevent DOB update
         $stmt = $conn->prepare("UPDATE user SET username=?, phone=?, profile_photo=? WHERE userid=?");
         $stmt->bind_param("sssi", $newUsername, $newPhone, $response, $userid);
     } else {
+        // Allow DOB update only if it's not already set
         $stmt = $conn->prepare("UPDATE user SET username=?, phone=?, profile_photo=?, dob=? WHERE userid=?");
         $stmt->bind_param("ssssi", $newUsername, $newPhone, $response, $newDOB, $userid);
     }
 
     if ($stmt->execute()) {
-        $swalType = "success";
-        $swalMsg = "Profile updated!";
-        $username = $newUsername;
-        $phone = $newPhone;
-        $profile_photo = $newPhoto;
-        if (!$dobReadonly) $dob = $newDOB;
-        $dobReadonly = !empty($dob);
+        // Redirect after successful update
+        header("Location: profile.php");  // Use the same page URL or a different page
+        exit;  // Make sure no further code is executed
     } else {
         $swalType = "error";
         $swalMsg = "Update failed.";
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
 </head>
 <body>
 
-<div class="card card-custom shadow p-4">
+<div class="card card-custom shadow p-4 mt-4">
   <form method="post" enctype="multipart/form-data">
     <div class="text-center mb-3">
       <img src="<?php echo $profile_photo ?: 'default.jpg'; ?>" 
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
     </div>
     <div class="mb-2">
       <label class="form-label">Username</label>
-      <input type="text" name="username" class="form-control" value="<?php echo $username; ?>" id="username" readonly required>
+      <input type="text" name="username" class="form-control" value="<?php echo $username; ?>" id="username">
     </div>
     <div class="mb-2">
       <label class="form-label">Email</label>
@@ -109,15 +109,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
     </div>
     <div class="mb-2">
       <label class="form-label">Phone</label>
-      <input type="text" name="phone" class="form-control" value="<?php echo $phone; ?>" id="phone" readonly required>
+      <input type="text" name="phone" class="form-control" value="<?php echo $phone; ?>" id="phone">
     </div>
     <div class="mb-3">
       <label class="form-label">Date of Birth</label>
       <input type="date" name="dob" class="form-control" value="<?php echo $dob; ?>" id="dob" <?php echo $dobReadonly ? 'readonly' : ''; ?> required>
       <?php if (!$dobReadonly): ?>
-        <small class="text-danger">⚠️ Once you set your date of birth, you cannot change it.</small>
+        <small class="text-danger">⚠️ You can set your DOB once. It cannot be changed later.</small>
       <?php else: ?>
-        <small class="text-muted">📌 Date of birth cann't change after first entry.</small>
+        <small class="text-muted">📌 DOB is locked and cannot be changed.</small>
       <?php endif; ?>
     </div>
     <div class="d-flex justify-content-end">
@@ -156,7 +156,7 @@ editBtn.addEventListener('click', () => {
 });
 
 cancelBtn.addEventListener('click', () => {
-  location.reload();
+  location.reload(); // This will reload the page and reset the form
 });
 </script>
 
