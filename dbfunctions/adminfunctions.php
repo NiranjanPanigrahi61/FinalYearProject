@@ -80,10 +80,12 @@ function addProduct($table_name, $name, $price, $quantity, $weight, $size, $desc
         if ($stmt->execute()) {
             return true;
         } else {
+            error_log("Failed to execute query: " . $stmt->error);
             return false;
         }
     } catch (Exception $e) {
-
+        error_log("Error: " . $e->getMessage());
+        return false;
 
     } finally {
         $conn->close();

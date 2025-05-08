@@ -24,46 +24,39 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `doughnuts`
 --
 
-CREATE TABLE `user` (
-  `userid` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(10) NOT NULL,
-  `password` varchar(10) NOT NULL,
-  `profile_photo` varchar(255) NOT NULL
+CREATE TABLE `doughnuts` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `quantity` int(11) DEFAULT 0,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `status` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`userid`, `username`, `email`, `phone`, `password`, `profile_photo`) VALUES
-(1, 'subha', 'subha@gmail.com', '8457863222', '123456', ''),
-(2, 'behera', 'behera@gmail.com', '4563217890', '2025', ''),
-(3, 'aaaaaaaa', 'aaaaaaa@gmail.com', '9963214567', 'Subha@12', '');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `user`
+-- Indexes for table `doughnuts`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`userid`);
+ALTER TABLE `doughnuts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `doughnuts`
 --
-ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `doughnuts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

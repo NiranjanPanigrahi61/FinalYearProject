@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2025 at 01:04 PM
+-- Generation Time: May 07, 2025 at 08:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `address` (
-  `address_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `delivery_address` varchar(255) NOT NULL,
   `landmark` varchar(255) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
@@ -40,6 +40,13 @@ CREATE TABLE `address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `address`
+--
+
+INSERT INTO `address` (`user_id`, `delivery_address`, `landmark`, `city`, `state`, `pincode`, `country`, `type`, `userid`) VALUES
+(1, 'silicon', 'dlf', 'bhubaneswar', 'odisha', '852741', 'india', 'Office', NULL);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -47,7 +54,7 @@ CREATE TABLE `address` (
 -- Indexes for table `address`
 --
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`address_id`),
+  ADD PRIMARY KEY (`user_id`),
   ADD KEY `userid` (`userid`);
 
 --
@@ -58,7 +65,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

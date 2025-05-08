@@ -8,15 +8,18 @@
     <link href="../../Bootstrap/bootstrap.min.css" rel="stylesheet">
     <style>
         .nav-link {
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.3s ease, color 0.3s ease;
             color: white !important;
+            padding: 10px 15px;
         }
 
         .nav-link:hover,
         .nav-link.active {
-            background: #FC8F59;
+            background-color: #FC8F59;
             color: white !important;
-            border-radius: 5px;
+            border-radius: 8px;
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+            font-weight: 500;
         }
 
         .btn {
@@ -80,19 +83,19 @@
                 <li class="nav-item"><a class="nav-link" href="./AdminProducts.php">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
                 <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#inventoryCollapseDesktop" role="button"
-                    aria-expanded="false" aria-controls="inventoryCollapseDesktop">
-                    Inventory
-                </a>
-                <div class="collapse ps-3" id="inventoryCollapseDesktop">
-                    <ul class="list-unstyled mb-0">
-                        <li><a class="nav-link" href="./addCategory.php">Add Category</a></li>
-                        <li><a class="nav-link" href="#">Remove Category</a></li>
-                        <li><a class="nav-link" href="./AdminAddProductForm.php">Add Product</a></li>
-                        <li><a class="nav-link" href="#">Remove Product</a></li>
-                    </ul>
-                </div>
-            </li>
+                    <a class="nav-link" data-bs-toggle="collapse" href="#inventoryCollapseDesktop" role="button"
+                        aria-expanded="false" aria-controls="inventoryCollapseDesktop">
+                        Inventory
+                    </a>
+                    <div class="collapse ps-3" id="inventoryCollapseDesktop">
+                        <ul class="list-unstyled mb-0">
+                            <li><a class="nav-link" href="./addCategory.php">Add Category</a></li>
+                            <li><a class="nav-link" href="#">Remove Category</a></li>
+                            <li><a class="nav-link" href="./AdminAddProductForm.php">Add Product</a></li>
+                            <li><a class="nav-link" href="#">Remove Product</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="#">Customize Cake</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Feedbacks</a></li>
                 <li class="nav-item"><a class="nav-link" href="./AdminProfile.php">Profile</a></li>
@@ -101,7 +104,38 @@
     </div>
 
     <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
-    
+    <script>
+        const currentPage = window.location.pathname.split("/").pop();
+        const desktopNavLinks = document.querySelectorAll(".d-md-block .nav-link");
+
+        let inventoryShouldExpand = false;
+
+        desktopNavLinks.forEach(link => {
+            const linkPage = link.getAttribute("href");
+
+            if (!linkPage || linkPage === "#") return;
+
+            if (linkPage.endsWith(currentPage)) {
+                link.classList.add("active");
+
+                // Check if it's inside the inventory menu
+                if (link.closest("#inventoryCollapseDesktop")) {
+                    inventoryShouldExpand = true;
+                }
+            } else {
+                link.classList.remove("active");
+            }
+        });
+
+        if (inventoryShouldExpand) {
+            const inventoryCollapse = document.getElementById("inventoryCollapseDesktop");
+            const inventoryToggle = document.querySelector('a[href="#inventoryCollapseDesktop"]');
+
+            inventoryCollapse.classList.add("show");
+            inventoryToggle.classList.add("active");
+        }
+    </script>
+
 </body>
 
 </html>
