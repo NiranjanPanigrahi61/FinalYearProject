@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
       <?php if (!$dobReadonly): ?>
         <small class="text-danger">⚠️ Once you set your date of birth, you cannot change it.</small>
       <?php else: ?>
-        <small class="text-muted">📌 Date of birth is locked after first entry.</small>
+        <small class="text-muted">📌 Date of birth cann't change after first entry.</small>
       <?php endif; ?>
     </div>
     <div class="d-flex justify-content-end">
