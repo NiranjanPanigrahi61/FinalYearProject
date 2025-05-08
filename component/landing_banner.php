@@ -12,7 +12,7 @@
                         Welcome to <strong>Cake Bliss</strong> — where every bite tells a story.<br>
                         Freshly baked cakes crafted with love and joy. Perfect for every celebration!
                     </p>
-                    <a href="#ourproducts" class="btn btn-outline-light mt-3">Explore Our Cakes</a>
+                    <a href="./productPage.php?id=all"  class="btn btn-outline-light mt-3">Explore</a>
                 </div>
 
                 <!-- Image on Right (flush to right edge) -->
@@ -24,6 +24,7 @@
             </div>
         </div>
     </section>
+
 </body>
 
 </html>

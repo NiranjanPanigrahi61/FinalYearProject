@@ -64,7 +64,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Cakes</h5>
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=cake" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Bread</h5>
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=bread" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Pastries</h5>
                         <!-- <p class="card-text">Every bite is a taste of culinary excellence</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=pastries" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Brownies</h5>
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=brownies" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Cookies</h5>
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=cookies" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Sandwich</h5>
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=sandwich" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Burger</h5>
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=burger" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
@@ -146,9 +146,9 @@
                 <div class="card h-70">
                     <img src="../assets/Donuts.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title"> Donuts</h5>
+                        <h5 class="card-title"> Doughnuts</h5>
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <a href="#" class="btn btn-danger">View More</a>
+                        <a href="./productPage.php?id=doughnuts" class="btn btn-danger">View More</a>
                     </div>
                 </div>
             </div>
