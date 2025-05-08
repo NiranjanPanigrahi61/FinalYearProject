@@ -53,9 +53,7 @@
                 <div class="collapse ps-3" id="inventoryCollapseDesktop">
                     <ul class="list-unstyled mb-0">
                         <li><a class="nav-link" href="./addCategory.php">Add Category</a></li>
-                        <li><a class="nav-link" href="#">Remove Category</a></li>
                         <li><a class="nav-link" href="./AdminAddProductForm.php">Add Product</a></li>
-                        <li><a class="nav-link" href="#">Remove Product</a></li>
                     </ul>
                 </div>
             </li>
@@ -90,9 +88,7 @@
                     <div class="collapse ps-3" id="inventoryCollapseDesktop">
                         <ul class="list-unstyled mb-0">
                             <li><a class="nav-link" href="./addCategory.php">Add Category</a></li>
-                            <li><a class="nav-link" href="#">Remove Category</a></li>
                             <li><a class="nav-link" href="./AdminAddProductForm.php">Add Product</a></li>
-                            <li><a class="nav-link" href="#">Remove Product</a></li>
                         </ul>
                     </div>
                 </li>
