@@ -9,32 +9,27 @@ include_once "./../config.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
-    <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        
         .nav-item {
             font-size: 1.2rem; 
             padding: 12px 16px; 
         }
 
-        /* Hover Effect Styling */
         .nav-link {
             transition: all 0.3s ease-in-out;
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 20px; /* Increased padding */
+            padding: 12px 20px;
         }
 
-        /* Initially hide the icons */
         .nav-link i {
             opacity: 0;
             transform: translateX(-10px);
             transition: all 0.3s ease-in-out;
         }
 
-        /* On hover, show icons */
         .nav-link:hover {
             color: #FC8F59 !important;
             transform: scale(1.08);
@@ -52,13 +47,11 @@ include_once "./../config.php";
         <div class="container-fluid">
             <a class="navbar-brand text-white fs-2 fw-bolder" href="#">Shop Name</a>
 
-            <!-- Toggle Button for Mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navbar Items -->
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="navbar-nav mx-auto text-center">
                     <li class="nav-item">
@@ -87,24 +80,32 @@ include_once "./../config.php";
                         </a>
                     </li>
                 </ul>
+
                 <?= isset($_SESSION['user_id']) ? '
                     <ul class="navbar-nav text-center">
                         <li class="nav-item">
                             <a class="nav-link text-white fw-bold" href="cart.html">
-                                <i class="fa-solid fa-cart-shopping text-white  p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i> 
+                                <i class="fa-solid fa-cart-shopping text-white p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i> 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white fw-bold" href="' . BASE_URL . 'pages/profile_section.php" title="Profile">
-                                <i class="fa-solid fa-user text-white  p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i>
+                                <i class="fa-solid fa-user text-white p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i>
                             </a>
                         </li>
-                    </ul>' : '<a class="nav-link text-white fw-bold" href="' . BASE_URL . 'pages/UserLogin.php">Login</a>' 
+                    </ul>' : '
+                    <ul class="navbar-nav text-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-bold" href="' . BASE_URL . 'pages/UserLogin.php">
+                                <i class="fa-solid fa-user"></i> Login
+                            </a>
+                        </li>
+                    </ul>'
                 ?>
-
             </div>
         </div>
     </nav>
+
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
