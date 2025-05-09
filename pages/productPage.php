@@ -86,18 +86,27 @@ $categories = category();
 <body>
 
     <nav class="navbar navbar-expand-lg bg-light shadow-sm">
-        <div class="container d-flex justify-content-between align-items-center">
-            <ul class="navbar-nav">
-                <?php foreach ($categories as $cat) { ?>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link <?php echo ($id === $cat) ? 'active fw-bold prod-nav' : ''; ?>"
-                            href="?id=<?php echo $cat; ?>">
-                            <?php echo ucfirst($cat); ?>
-                        </a>
-                    </li>
-                <?php } ?>
-            </ul>
-            <a href="javascript:history.back()" class="text-decoration-none text-secondary ms-auto">← Back</a>
+        <div class="container">
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#productNavbar"
+                aria-controls="productNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="productNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <?php foreach ($categories as $cat) { ?>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link <?php echo ($id === $cat) ? 'active fw-bold prod-nav' : ''; ?>"
+                                href="?id=<?php echo $cat; ?>">
+                                <?php echo ucfirst($cat); ?>
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
+                <a href="javascript:history.back()" class="text-decoration-none text-secondary">← Back</a>
+            </div>
         </div>
     </nav>
 
@@ -119,7 +128,7 @@ $categories = category();
                                 <?php } ?>
 
                                 <p class="card-text product-description"><?php echo $td['description'] ?></p>
-                                <a href="./productDetailPage.php?tid=<?php echo $td['table'] ?>&id=<?php echo $td['id']?>" class="btn btn-warning mt-auto ms-auto">View <i class="bi bi-arrow-right"></i></a>
+                                <a href="./productDetailPage.php?tid=<?php echo $td['table'] ?>&id=<?php echo $td['id'] ?>" class="btn btn-warning mt-auto ms-auto">View <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -139,7 +148,7 @@ $categories = category();
                                 <?php } ?>
 
                                 <p class="card-text product-description"><?php echo $row['description'] ?></p>
-                                <a href="./productDetailPage.php?tid=<?php echo $id?>&id=<?php echo $row['id']?>" class="btn btn-warning mt-auto ms-auto">View <i class="bi bi-arrow-right"></i></a>
+                                <a href="./productDetailPage.php?tid=<?php echo $id ?>&id=<?php echo $row['id'] ?>" class="btn btn-warning mt-auto ms-auto">View <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -162,10 +171,30 @@ $categories = category();
     </div>
 
     <script src="./../Bootstrap/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navbarCollapse = document.getElementById('productNavbar');
+            const navLinks = navbarCollapse.querySelectorAll('.nav-link');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Check if the navbar is expanded (only on small screens)
+                    if (window.innerWidth < 992) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                        if (bsCollapse) {
+                            bsCollapse.hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>
 
-<?php 
+<?php
 include_once "../component/footer.php";
 ?>

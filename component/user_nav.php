@@ -45,7 +45,7 @@ include_once "./../config.php";
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark p-3 sticky-top" style="background-color: #D02964;">
         <div class="container-fluid">
-            <a class="navbar-brand text-white fs-2 fw-bolder" href="#">Shop Name</a>
+            <a class="navbar-brand text-white fs-2 fw-bolder" href="#">Velvet Crust</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,5 +107,20 @@ include_once "./../config.php";
     </nav>
 
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navbarCollapse = document.getElementById('navbarNav');
+
+        navLinks.forEach(function(link) {
+            link.addEventListener("click", function () {
+                if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                    new bootstrap.Collapse(navbarCollapse).hide();
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
