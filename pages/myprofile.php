@@ -1,9 +1,12 @@
 <?php
+ob_start(); // Start output buffering at the very beginning
 include '../dbfunctions/dbconnect.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    die("Access denied. Please log in.");
+    header("Location: login.php");
+    ob_end_flush();
+    exit();
 }
 
 $userid = $_SESSION['user_id'];
@@ -55,16 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
     }
 
     if ($stmt->execute()) {
-        // Redirect after successful update
-        header("Location: profile.php");  // Use the same page URL or a different page
-        exit;  // Make sure no further code is executed
+        ob_end_clean(); // Clean the buffer before redirect
+        header("Location: profile_section.php");
+        exit();
     } else {
         $swalType = "error";
         $swalMsg = "Update failed.";
     }
 }
+ob_end_flush(); // Send the buffered output
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,7 +159,7 @@ editBtn.addEventListener('click', () => {
 });
 
 cancelBtn.addEventListener('click', () => {
-  location.reload(); // This will reload the page and reset the form
+  location.reload();
 });
 </script>
 
