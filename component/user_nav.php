@@ -45,7 +45,7 @@ include_once "./../config.php";
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark p-3 sticky-top" style="background-color: #D02964;">
         <div class="container-fluid">
-            <a class="navbar-brand text-white fs-2 fw-bolder" href="#">Velvet Crust</a>
+            <a class="navbar-brand text-white fs-2 fw-bolder" href="<?= BASE_URL ?>pages/home.php">Velvet Crust</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
