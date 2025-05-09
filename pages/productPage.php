@@ -21,6 +21,7 @@ $categories = category();
 <head>
     <title>Product Page</title>
     <link href="./../Bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <style>
         .product-img {
             height: 200px;
@@ -71,7 +72,7 @@ $categories = category();
         }
 
         .page-link {
-            color: #D02964;
+            color: #D02964 !important;
         }
 
         .page-link:hover {
@@ -118,7 +119,7 @@ $categories = category();
                                 <?php } ?>
 
                                 <p class="card-text product-description"><?php echo $td['description'] ?></p>
-                                <a href="#" class="btn btn-warning mt-auto">Go somewhere</a>
+                                <a href="./productDetailPage.php?tid=<?php echo $td['table'] ?>&id=<?php echo $td['id']?>" class="btn btn-warning mt-auto ms-auto">View <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -138,7 +139,7 @@ $categories = category();
                                 <?php } ?>
 
                                 <p class="card-text product-description"><?php echo $row['description'] ?></p>
-                                <a href="#" class="btn btn-warning mt-auto">Go somewhere</a>
+                                <a href="./productDetailPage.php?tid=<?php echo $id?>&id=<?php echo $row['id']?>" class="btn btn-warning mt-auto ms-auto">View <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>

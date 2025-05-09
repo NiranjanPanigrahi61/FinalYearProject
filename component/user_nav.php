@@ -43,7 +43,7 @@ include_once "./../config.php";
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark p-3" style="background-color: #D02964;">
+    <nav class="navbar navbar-expand-lg navbar-dark p-3 sticky-top" style="background-color: #D02964;">
         <div class="container-fluid">
             <a class="navbar-brand text-white fs-2 fw-bolder" href="#">Shop Name</a>
 
@@ -60,7 +60,7 @@ include_once "./../config.php";
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>pages/Customize.php">
+                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>pages/productPage.php?id=cake">
                             <i class="fa-solid fa-cake-candles"></i> Customized Cake
                         </a>
                     </li>

@@ -128,4 +128,23 @@ function category() {
         die($e->getMessage());
     }
 }
+
+function productDetail($table,$id){
+    global $conn;
+    try{
+        $qry="SELECT * FROM $table WHERE id=?";
+        $stmt=$conn->prepare($qry);
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $res=$stmt->get_result();
+        if($res){
+            return $res;
+        }else{
+            return false;
+        }
+    }catch(Exception $e){
+        die($e->getMessage());
+    }
+
+}
 ?>
