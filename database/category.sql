@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2025 at 08:39 PM
+-- Generation Time: May 09, 2025 at 04:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,9 @@ INSERT INTO `category` (`id`, `name`, `table_name`, `table_img`, `created_at`, `
 (2, 'Bread', 'bread', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/Bread_category.jpg', '2025-04-10 06:27:30', '2025-05-07 18:37:19', 'active'),
 (3, 'Pastries', 'pastries', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/Pastries_category.jpg', '2025-04-10 06:35:46', '2025-05-07 18:36:46', 'active'),
 (5, 'Doughnuts', 'doughnuts', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/1746642716-doughnuts_category.jpg', '2025-05-07 18:31:57', '2025-05-07 18:31:57', 'active'),
-(6, 'Cookie', 'cookie', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/1746642733-Cookie_category.jpg', '2025-05-07 18:32:14', '2025-05-07 18:32:14', 'active');
+(6, 'Cookie', 'cookie', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/1746642733-Cookie_category.jpg', '2025-05-07 18:32:14', '2025-05-07 18:32:14', 'active'),
+(7, 'burger', 'burger', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/1746731444-burger.jpg', '2025-05-08 19:10:46', '2025-05-08 19:10:46', 'active'),
+(8, 'sandwich', 'sandwich', 'https://bakeybucket.s3.ap-south-1.amazonaws.com/category/1746731555-sandwich.jpg', '2025-05-08 19:12:37', '2025-05-08 19:12:37', 'active');
 
 --
 -- Indexes for dumped tables
@@ -67,7 +69,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

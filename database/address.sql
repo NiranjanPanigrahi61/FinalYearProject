@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2025 at 08:38 PM
+-- Generation Time: May 08, 2025 at 05:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `address` (
-  `user_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `delivery_address` varchar(255) NOT NULL,
   `landmark` varchar(255) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
@@ -43,8 +43,8 @@ CREATE TABLE `address` (
 -- Dumping data for table `address`
 --
 
-INSERT INTO `address` (`user_id`, `delivery_address`, `landmark`, `city`, `state`, `pincode`, `country`, `type`, `userid`) VALUES
-(1, 'silicon', 'dlf', 'bhubaneswar', 'odisha', '852741', 'india', 'Office', NULL);
+INSERT INTO `address` (`id`, `delivery_address`, `landmark`, `city`, `state`, `pincode`, `country`, `type`, `userid`) VALUES
+(4, 'Bhubaneswar, odisha\r\n751024', 'ghccghcfhj', 'Bhubaneswar', 'Odisha', '757083', 'India', '', 4);
 
 --
 -- Indexes for dumped tables
@@ -54,7 +54,7 @@ INSERT INTO `address` (`user_id`, `delivery_address`, `landmark`, `city`, `state
 -- Indexes for table `address`
 --
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`user_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `userid` (`userid`);
 
 --
@@ -65,7 +65,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

@@ -16,3 +16,5 @@ session_destroy();
 header("Location:home.php");
 exit();
 ?>
+</html>
+<?php include_once "../component/footer.php"; ?>

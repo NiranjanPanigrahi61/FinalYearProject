@@ -74,3 +74,5 @@ include '../component/user_nav.php';
 
 </body>
 </html>
+</html>
+<?php include_once "../component/footer.php"; ?>
