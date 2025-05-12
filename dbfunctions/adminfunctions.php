@@ -157,4 +157,21 @@ function orderDetails(){
         $conn->close();
     }
 }
+function feeedBackDetails(){
+    global $conn;
+    try{
+        $qry="SELECT * FROM feedback";
+        $stmt=$conn->prepare($qry);
+        $stmt->execute();
+        if($result=$stmt->get_result()){
+            return $result;
+        }else{
+            return false;
+        }
+    }catch(Exception $e){
+        die($e->getMessage());
+    }finally{
+        $conn->close();
+    }
+}
 ?>

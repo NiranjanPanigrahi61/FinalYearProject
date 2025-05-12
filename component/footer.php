@@ -17,7 +17,6 @@
                     <ul class="list-unstyled">
                         <li><a href="<?=BASE_URL?>/pages/Admin/AdminLogin.php"
                                 class="text-white text-decoration-none">Admin</a></li>
-                        <li><a href="<?= BASE_URL ?>pages/productPage.php?id=cake" class="text-white text-decoration-none">Customized Cake</a></li>
                         <li><a href="<?= BASE_URL ?>component/about.php" class="text-white text-decoration-none">About</a></li>
                         <li><a href="<?= BASE_URL ?>component/contactus.php" class="text-white text-decoration-none">Contact</a></li>
                         <li><a href="<?= BASE_URL ?>pages/productPage.php?id=all" class="text-white text-decoration-none">Product</a></li>

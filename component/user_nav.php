@@ -70,11 +70,6 @@ if(isset($_SESSION['user_id'])){
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>pages/productPage.php?id=cake">
-                            <i class="fa-solid fa-cake-candles"></i> Customized Cake
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link text-white fw-bold" href="<?= BASE_URL ?>component/about.php">
                             <i class="fa-solid fa-circle-info"></i> About
                         </a>

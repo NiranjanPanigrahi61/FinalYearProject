@@ -57,8 +57,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">Customize Cake</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Feedbacks</a></li>
+            <li class="nav-item"><a class="nav-link" href="./AdminFeedBack.php">Feedbacks</a></li>
             <li class="nav-item"><a class="nav-link" href="./AdminProfile.php">Profile</a></li>
         </ul>
     </div>
@@ -92,8 +91,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">Customize Cake</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Feedbacks</a></li>
+                <li class="nav-item"><a class="nav-link" href="./AdminFeedBack.php">Feedbacks</a></li>
                 <li class="nav-item"><a class="nav-link" href="./AdminProfile.php">Profile</a></li>
             </ul>
         </div>
