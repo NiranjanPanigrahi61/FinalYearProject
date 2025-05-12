@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
 </head>
 <body>
-    <footer class="text-white pt-4  mt-4" style="background-color: #D02964">
+    <footer class="text-white pt-4 " style="background-color: #D02964">
         <div class="container ">
             <div class="row">
                 <!-- Quick Links -->
