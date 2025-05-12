@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["loggedin"])){
+if (!isset($_SESSION["loggedin"])) {
     header("location:AdminLogin.php");
     exit();
 }
@@ -20,19 +20,25 @@ $data = showproduct();
     <link href="../../Bootstrap/bootstrap.min.css" rel="stylesheet">
     <style>
         .product-block {
-            position: fixed;
-            margin-top: 110px;
-            margin-left: 275px;
-            height: 600px;
             width: 1200px;
+            position: fixed;
+            top: 110px;
+            left: 275px;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            padding: 20px;
+            background-color: #f8f9fa;
+            max-height: calc(100vh - 150px);
+            /* adjust height as needed */
             overflow-y: auto;
+            padding-right: 10px;
         }
 
         @media (max-width: 768px) {
             .product-block {
-                margin-left: 0px;
-                margin-top: 86px;
-                width: 100%;
+                top: 86px;
+                left: 0;
             }
         }
 
@@ -43,6 +49,28 @@ $data = showproduct();
         .glow {
             box-shadow: 0 0 15px 4px #ED555A !important;
             transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card.fixed-card {
+            width: 100%;
+            max-width: 320px;
+            height: 420px;
+            margin: auto;
+        }
+
+        .card-img-top.fixed-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .glow {
+            box-shadow: 0 0 15px 4px #ED555A !important;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card-img-top.fixed-img {
+            height: 200px;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -57,7 +85,7 @@ $data = showproduct();
             <button class="btn btn-danger" id="searchBtn" type="button">Search</button>
         </div>
 
-        <div class="row g-3" id="productRow">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="productRow">
             <?php
             if ($data) {
                 $stat = false;
@@ -65,12 +93,12 @@ $data = showproduct();
                     if ($res['status'] == "active") {
                         $stat = true;
             ?>
-                        <div class="col-md-4 product-card">
-                            <div class="card" style="width: 18rem;">
-                                <img src="<?php echo $res['table_img'];?>" class="card-img-top" alt="<?php echo $res['name']."_img";?>">
-                                <div class="card-body">
+                        <div class="col product-card">
+                            <div class="card h-100 d-flex flex-column">
+                                <img src="<?php echo $res['table_img']; ?>" class="card-img-top fixed-img" alt="<?php echo $res['name'] . "_img"; ?>">
+                                <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title"><?php echo $res['name']; ?></h5>
-                                    <a href="./AdminManageProduct.php?id=<?php echo $res['table_name']?>" class="btn mx-auto d-block">Manage</a>
+                                    <a href="./AdminManageProduct.php?id=<?php echo $res['table_name'] ?>" class="btn btn-danger mt-auto">Manage</a>
                                 </div>
                             </div>
                         </div>
@@ -85,6 +113,7 @@ $data = showproduct();
             }
             ?>
         </div>
+
         <div id="noResultsMsg" class="text-danger h5 mt-3" style="display: none;">
             No products matched your search.
         </div>
