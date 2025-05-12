@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2025 at 07:59 AM
+-- Generation Time: May 12, 2025 at 11:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,11 +29,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `feedback` (
   `id` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `message` text NOT NULL,
-  `rating` int(11) DEFAULT NULL CHECK (`rating` between 1 and 5),
-  `submitted_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `userid` int(11) DEFAULT NULL,
+  `message` varchar(255) NOT NULL,
+  `name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `userid`, `message`, `name`) VALUES
+(6, 5, 'yjyvvjkbkjbkjbkb opjp', 'ycfujvfuj iguigigigi'),
+(7, 5, 'Velvet crust\'s products are yammy', 'Subhendu Behera');
 
 --
 -- Indexes for dumped tables
@@ -54,7 +61,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -64,7 +71,7 @@ ALTER TABLE `feedback`
 -- Constraints for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE;
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
