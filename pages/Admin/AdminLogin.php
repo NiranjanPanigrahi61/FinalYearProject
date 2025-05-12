@@ -64,7 +64,7 @@
                                         <div class="text-danger" id="adminPasswordError"></div>
                                     </div>
                                     <div class="text-end mb-3">
-                                        <a href="#" style="color: #D02964;">Forgot password?</a>
+                                        <a href="#" id="forgotPasswordLink" style="color: #D02964;">Forgot password?</a>
                                     </div>
                                     <div class="text-danger text-center mt-3" id="serverError"></div>
                                     <div class="d-grid">
@@ -83,10 +83,52 @@
         </div>
     </div>
 
+    <!-- OTP Verification Modal -->
+    <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="otpModalLabel">Verify OTP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>An OTP has been sent to your email. Please enter it below.</p>
+                    <input type="text" id="otpInput" class="form-control mb-2" placeholder="Enter OTP">
+                    <div class="text-danger mb-2" id="otpError"></div>
+                    <button id="verifyOtpBtn" class="btn btn-primary w-100 mb-2">Verify OTP</button>
+                    <div class="text-center">
+                        <span id="resendTimer">Resend OTP in 30s</span>
+                        <button id="resendOtpBtn" class="btn btn-link" style="display:none;">Resend OTP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Password Modal -->
+    <div class="modal fade" id="newPasswordModal" tabindex="-1" aria-labelledby="newPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="password" id="newPassword" class="form-control mb-2" placeholder="New Password">
+                    <input type="password" id="confirmPassword" class="form-control mb-2" placeholder="Confirm Password">
+                    <div class="text-danger mb-2" id="passwordError"></div>
+                    <button id="resetPasswordBtn" class="btn btn-success w-100">Reset Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./../../JQuery/jquery-3.7.1.js"></script>
 
     <script>
-        document.getElementById("adminLoginForm").addEventListener("submit", function (event) {
+        document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
             event.preventDefault();
             let email = document.getElementById("admin-email").value;
             let password = document.getElementById("admin-password").value;
@@ -117,8 +159,8 @@
                         password: password
                     },
                     success: function(data) {
-                        if(data){
-                            window.location.href="./dashboard.php";
+                        if (data) {
+                            window.location.href = "./dashboard.php";
                         } else {
                             serverError.textContent = "Invalid Admin";
                         }
@@ -129,8 +171,172 @@
                 });
             }
         });
+
+        let resendCountdown;
+        let email;
+
+        function startResendTimer() {
+            let timer = 30;
+            $('#resendOtpBtn').hide();
+            $('#resendTimer').text(`Resend OTP in ${timer}s`);
+
+            resendCountdown = setInterval(() => {
+                timer--;
+                if (timer <= 0) {
+                    clearInterval(resendCountdown);
+                    $('#resendTimer').hide();
+                    $('#resendOtpBtn').show();
+                } else {
+                    $('#resendTimer').text(`Resend OTP in ${timer}s`);
+                }
+            }, 1000);
+        }
+
+        $('#forgotPasswordLink').on('click', function() {
+            email = $('#admin-email').val();
+
+            // Validate email before sending OTP
+            if (!email) {
+                $('#adminEmailError').text("Please enter your email to receive OTP.");
+                return;
+            }
+
+            // Validate if the email format is correct
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailRegex.test(email)) {
+                $('#adminEmailError').text("Please enter a valid email.");
+                return;
+            }
+
+            // Clear any previous error messages
+            $('#adminEmailError').text('');
+
+            // Send OTP via AJAX
+            $.ajax({
+                url: "../../mail/sendotp.php",
+                type: "POST",
+                data: {
+                    email: email
+                },
+                success: function(response) {
+                    console.log('OTP Response:', response); // Log the response for debugging
+                    response = JSON.parse(response);
+
+                    // Check if the response is 'success' from the backend
+                    if (response.status === 'success') {
+                        $('#otpError').text('');
+                        $('#otpInput').val('');
+                        var otpModal = new bootstrap.Modal(document.getElementById('otpModal'));
+                        otpModal.show(); // Use Bootstrap 5's modal API
+                        $('#resendTimer').show();
+                        startResendTimer();
+                    } else {
+                        $('#otpError').text("Failed to send OTP. Please try again.");
+                    }
+                },
+                error: function() {
+                    $('#otpError').text("Failed to send OTP. Please try again.");
+                }
+            });
+        });
+
+
+        $('#resendOtpBtn').on('click', function() {
+            $.ajax({
+                url: "../../mail/sendotp.php",
+                type: "POST",
+                data: {
+                    email: email
+                },
+                success: function(response) {
+                    console.log('Resend OTP Response:', response); // Log the response for debugging
+                    $('#resendOtpBtn').hide();
+                    $('#resendTimer').show().text("Resend OTP in 30s");
+                    startResendTimer();
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: 'Failed to resend OTP. Please try again.',
+                        confirmButtonColor: '#D02964'
+                    });
+                }
+            });
+        });
+
+        $('#verifyOtpBtn').on('click', function() {
+            const otp = $('#otpInput').val();
+            if (!otp) {
+                $('#otpError').text("Please enter the OTP.");
+                return;
+            }
+
+            $.ajax({
+                url: "../../mail/verifyotp.php",
+                type: "POST",
+                data: {
+                    email: email,
+                    otp: otp
+                },
+                success: function(data) {
+                    data = JSON.parse(data);
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Password successfully reset.',
+                            confirmButtonColor: '#D02964'
+                        }).then(() => {
+                            $('#newPasswordModal').modal('hide');
+                        });
+                    } else {
+                        $('#otpError').text("Invalid or expired OTP.");
+                    }
+                },
+                error: function() {
+                    $('#otpError').text("OTP verification failed. Please try again.");
+                }
+            });
+        });
+
+        $('#resetPasswordBtn').on('click', function() {
+            const newPassword = $('#newPassword').val();
+            const confirmPassword = $('#confirmPassword').val();
+
+            if (newPassword.length < 6) {
+                $('#passwordError').text("Password must be at least 6 characters.");
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                $('#passwordError').text("Passwords do not match.");
+                return;
+            }
+
+            $.ajax({
+                url: "../../dbfunctions/forgotAdminpassword.php",
+                type: "POST",
+                data: {
+                    email: email,
+                    new_password: newPassword
+                },
+                success: function(data) {
+                    data = JSON.parse(data);
+                    if (data.status === 'success') {
+                        alert("Password successfully reset.");
+                        $('#newPasswordModal').modal('hide');
+                    } else {
+                        $('#passwordError').text("Something went wrong. Try again.");
+                    }
+                },
+                error: function() {
+                    $('#passwordError').text("Password reset failed. Please try again.");
+                }
+            });
+        });
     </script>
 
-    <script src="../../Bootstrap/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
