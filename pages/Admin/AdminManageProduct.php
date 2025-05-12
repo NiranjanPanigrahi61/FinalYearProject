@@ -55,7 +55,80 @@ $data = manageProduct($id);
             color: red;
         }
 
+        /* Table styling to look like DataTables */
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            font-size: 14px;
+        }
 
+        .table th {
+            background-color: #D02964 !important;
+            color: white !important;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle !important;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9 !important;
+        }
+
+        .table tbody tr:hover {
+            background-color: #e6f7ff !important;
+            transition: background-color 0.2s ease;
+        }
+
+        .table img {
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .table img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Buttons inside the table */
+        .btn-update,
+        .btn-remove {
+            padding: 5px 10px;
+            font-size: 13px;
+            border-radius: 6px;
+        }
+
+        .btn-update {
+            background-color: #17a2b8;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-update:hover {
+            background-color: #138496;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+        /* Header title */
+        h1 {
+            font-weight: 600;
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
     </style>
 </head>
 
@@ -409,7 +482,7 @@ $data = manageProduct($id);
                             image_url: imageUrl
                         },
                         success: function(response) {
-                            
+
                             if (response.trim() === "success") {
                                 Swal.fire(
                                     'Deleted!',

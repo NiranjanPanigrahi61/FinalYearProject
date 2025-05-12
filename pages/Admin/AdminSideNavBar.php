@@ -44,7 +44,7 @@
             <li class="nav-item"><a class="nav-link active" href="./dashboard.php">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="./items.php">Items</a></li>
             <li class="nav-item"><a class="nav-link" href="./AdminProducts.php">Products</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
+            <li class="nav-item"><a class="nav-link" href="./AdminOrderSection.php">Orders</a></li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#inventoryCollapseDesktop" role="button"
                     aria-expanded="false" aria-controls="inventoryCollapseDesktop">
@@ -79,7 +79,7 @@
                 <li class="nav-item"><a class="nav-link active" href="./dashboard.php">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="./items.php">Items</a></li>
                 <li class="nav-item"><a class="nav-link" href="./AdminProducts.php">Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
+                <li class="nav-item"><a class="nav-link" href="./AdminOrderSection.php">Orders</a></li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#inventoryCollapseDesktop" role="button"
                         aria-expanded="false" aria-controls="inventoryCollapseDesktop">

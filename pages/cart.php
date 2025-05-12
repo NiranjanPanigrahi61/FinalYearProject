@@ -311,7 +311,7 @@ $addressId = $addressRow['id'] ?? null;
                                             confirmButtonColor: '#D02964'
                                         }).then(() => {
                                             // Redirect or refresh if needed
-                                            window.location.href = 'home.php'; // Change this if you have a thank you page
+                                            window.location.href = 'productPage.php?id=all'; // Change this if you have a thank you page
                                         });
                                         // You can also close modal or do any other UI updates here
                                     },

@@ -30,7 +30,7 @@
 <nav class="navbar p-4 position-fixed w-100" style="background-color: #D02964;">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center ms-3 ms-md-0 flex-grow-1">
-            <h4 class="text-center text-white m-0">Silicon Baking</h4>
+            <h4 class="text-center text-white m-0">Velvet Crust</h4>
         </div>
         <div class="d-flex align-items-center">
             <!-- Profile Icon Button -->

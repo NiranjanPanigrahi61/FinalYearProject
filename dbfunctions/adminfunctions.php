@@ -139,4 +139,22 @@ function adminInfo(){
         $conn->close();
     }
 }
+
+function orderDetails(){
+    global $conn;
+    try{
+        $qry="SELECT * FROM orders";
+        $stmt=$conn->prepare($qry);
+        $stmt->execute();
+        if($result=$stmt->get_result()){
+            return $result;
+        }else{
+            return false;
+        }
+    }catch(Exception $e){
+        die($e->getMessage());
+    }finally{
+        $conn->close();
+    }
+}
 ?>
