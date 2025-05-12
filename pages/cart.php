@@ -107,7 +107,7 @@ $addressId = $addressRow['id'] ?? null;
             <?php foreach ($cartItems as $item) :
                 $isCake = isset($item['weight']) && isset($item['size']);
             ?>
-                <div class="card cart-card mb-4 p-3" data-product-id="<?= $item['productid'] ?>">
+                <div class="card cart-card mb-4 p-3" data-product-id="<?= $item['productid'] ?>" data-product-type="<?= $item['table_name'] ?>">
                     <div class="row g-3 align-items-center">
                         <div class="col-4 col-md-3">
                             <img src="<?= htmlspecialchars($item['image']) ?>" class="fixed-image" alt="<?= htmlspecialchars($item['product_name']) ?>">
@@ -268,9 +268,11 @@ $addressId = $addressRow['id'] ?? null;
                     const quantity = parseInt($(this).find('.quantity-value').text());
                     const priceText = $(this).find('.card-text:contains("Price")').text();
                     const price = parseFloat(priceText.replace(/[^0-9.]/g, '')); // Extract numeric price
+                    const productType = $(this).data('product-type');
 
                     quantities.push({
                         product_id: productId,
+                        product_type: productType,
                         quantity: quantity,
                         price: price
                     });
@@ -311,7 +313,7 @@ $addressId = $addressRow['id'] ?? null;
                                             confirmButtonColor: '#D02964'
                                         }).then(() => {
                                             // Redirect or refresh if needed
-                                            window.location.href = 'productPage.php?id=all'; // Change this if you have a thank you page
+                                           window.location.href = 'productPage.php?id=all'; // Change this if you have a thank you page
                                         });
                                         // You can also close modal or do any other UI updates here
                                     },

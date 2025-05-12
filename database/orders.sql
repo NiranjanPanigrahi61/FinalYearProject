@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2025 at 07:59 AM
+-- Generation Time: May 12, 2025 at 09:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,10 +31,12 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `orderid` varchar(255) NOT NULL,
+  `productid` int(11) NOT NULL,
   `addressid` int(11) NOT NULL,
   `paymentid` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 0,
   `total_price` decimal(10,2) NOT NULL,
+  `category` varchar(255) NOT NULL,
   `status` enum('Pending','Processing','Shipped','Delivered','Cancelled') DEFAULT 'Pending',
   `order_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -43,16 +45,22 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `userid`, `orderid`, `addressid`, `paymentid`, `quantity`, `total_price`, `status`, `order_date`) VALUES
-(5, 4, 'order_QTrJbXUecu94ZO', 4, 'pay_QTrJnuSdkUvSRT', 2, 459.00, 'Pending', '2025-05-12 08:21:39'),
-(6, 4, 'order_QTrLlIe9WOaXfG', 4, 'pay_QTrLtgPzZcyzkt', 1, 3499.00, 'Pending', '2025-05-12 08:23:38'),
-(7, 4, 'order_QTrLlIe9WOaXfG', 4, 'pay_QTrLtgPzZcyzkt', 1, 2199.00, 'Pending', '2025-05-12 08:23:38'),
-(8, 4, 'order_QTrLlIe9WOaXfG', 4, 'pay_QTrLtgPzZcyzkt', 2, 1599.00, 'Pending', '2025-05-12 08:23:38'),
-(9, 4, 'order_QTrbAvB9y1Oo4x', 4, 'pay_QTrc1nF9mZmUfF', 1, 110.00, 'Pending', '2025-05-12 08:38:54'),
-(10, 4, 'order_QTrbAvB9y1Oo4x', 4, 'pay_QTrc1nF9mZmUfF', 1, 129.00, 'Pending', '2025-05-12 08:38:54'),
-(11, 4, 'order_QTrbAvB9y1Oo4x', 4, 'pay_QTrc1nF9mZmUfF', 1, 65.00, 'Pending', '2025-05-12 08:38:54'),
-(12, 4, 'order_QTrbAvB9y1Oo4x', 4, 'pay_QTrc1nF9mZmUfF', 1, 60.00, 'Pending', '2025-05-12 08:38:54'),
-(13, 4, 'order_QTrbAvB9y1Oo4x', 4, 'pay_QTrc1nF9mZmUfF', 1, 320.00, 'Pending', '2025-05-12 08:38:54');
+INSERT INTO `orders` (`id`, `userid`, `orderid`, `productid`, `addressid`, `paymentid`, `quantity`, `total_price`, `category`, `status`, `order_date`) VALUES
+(18, 4, 'order_QU7MLzS2LwtYGq', 7, 4, 'pay_QU7MQHyY04zlou', 1, 4599.00, 'cake', 'Delivered', '2025-05-13 00:03:14'),
+(19, 4, 'order_QU7MLzS2LwtYGq', 6, 4, 'pay_QU7MQHyY04zlou', 1, 1299.00, 'cake', 'Delivered', '2025-05-13 00:03:14'),
+(20, 4, 'order_QU7MLzS2LwtYGq', 2, 4, 'pay_QU7MQHyY04zlou', 1, 70.00, 'bread', 'Delivered', '2025-05-13 00:03:14'),
+(21, 4, 'order_QU7MLzS2LwtYGq', 5, 4, 'pay_QU7MQHyY04zlou', 1, 90.00, 'bread', 'Delivered', '2025-05-13 00:03:14'),
+(22, 4, 'order_QU7MLzS2LwtYGq', 6, 4, 'pay_QU7MQHyY04zlou', 1, 145.00, 'burger', 'Delivered', '2025-05-13 00:03:14'),
+(23, 4, 'order_QU7MLzS2LwtYGq', 2, 4, 'pay_QU7MQHyY04zlou', 1, 139.00, 'burger', 'Delivered', '2025-05-13 00:03:14'),
+(24, 4, 'order_QU7MLzS2LwtYGq', 3, 4, 'pay_QU7MQHyY04zlou', 1, 400.00, 'cookie', 'Delivered', '2025-05-13 00:03:14'),
+(25, 4, 'order_QU7MLzS2LwtYGq', 4, 4, 'pay_QU7MQHyY04zlou', 1, 370.00, 'cookie', 'Delivered', '2025-05-13 00:03:14'),
+(26, 4, 'order_QU7MLzS2LwtYGq', 3, 4, 'pay_QU7MQHyY04zlou', 1, 65.00, 'doughnuts', 'Delivered', '2025-05-13 00:03:14'),
+(27, 4, 'order_QU7MLzS2LwtYGq', 5, 4, 'pay_QU7MQHyY04zlou', 1, 55.00, 'doughnuts', 'Delivered', '2025-05-13 00:03:14'),
+(28, 4, 'order_QU7MLzS2LwtYGq', 4, 4, 'pay_QU7MQHyY04zlou', 1, 75.00, 'pastries', 'Delivered', '2025-05-13 00:03:14'),
+(29, 4, 'order_QU7MLzS2LwtYGq', 5, 4, 'pay_QU7MQHyY04zlou', 1, 75.00, 'pastries', 'Delivered', '2025-05-13 00:03:14'),
+(30, 4, 'order_QU7MLzS2LwtYGq', 3, 4, 'pay_QU7MQHyY04zlou', 1, 109.00, 'sandwich', 'Delivered', '2025-05-13 00:03:14'),
+(31, 4, 'order_QU7MLzS2LwtYGq', 4, 4, 'pay_QU7MQHyY04zlou', 1, 129.00, 'sandwich', 'Delivered', '2025-05-13 00:03:14'),
+(32, 4, 'order_QU892BxxS5f0Q7', 3, 4, 'pay_QU89DSlSQHdhdO', 1, 3499.00, 'cake', 'Delivered', '2025-05-13 00:49:26');
 
 --
 -- Indexes for dumped tables
@@ -74,7 +82,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

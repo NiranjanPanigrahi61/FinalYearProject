@@ -80,10 +80,13 @@ $data = orderDetails();
                             <tr>
                                 <th>User ID</th>
                                 <th>Order ID</th>
+                                <th>Product ID</th>
                                 <th>Address ID</th>
                                 <th>Payment ID</th>
+                                <th>Product Name</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Category</th>
                                 <th>Order Date</th>
                                 <th>Status</th>
                                 <th style="display:none;">StatusSort</th> <!-- Hidden sort column -->
@@ -91,14 +94,37 @@ $data = orderDetails();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = $data->fetch_assoc()) { ?>
+                            <?php while ($row = $data->fetch_assoc()) {
+
+                                $table = $row['category'];
+                                $id = $row['productid'];
+                                $conn = new mysqli("localhost", "root", "", "bakery") or die("Connection failed: " . $conn->connect_error);
+
+                                try {
+                                    $qry = "SELECT product_name from $table WHERE id=?";
+                                    $stmt = $conn->prepare($qry);
+                                    $stmt->bind_param("i", $id);
+                                    $stmt->execute();
+                                    $res = $stmt->get_result();
+                                    $prodName = $res->fetch_assoc();
+                                } catch (Exception $e) {
+                                    die($e->getMessage());
+                                } finally {
+                                    $conn->close();
+                                }
+
+                            ?>
+
                                 <tr id="order-<?php echo $row['orderid']; ?>">
                                     <td><?php echo $row['userid']; ?></td>
                                     <td><?php echo $row['orderid']; ?></td>
+                                    <td><?php echo $row['productid']; ?></td>
                                     <td><?php echo $row['addressid']; ?></td>
                                     <td><?php echo $row['paymentid']; ?></td>
+                                    <td><?php echo $prodName['product_name']; ?></td>
                                     <td><?php echo $row['quantity']; ?></td>
                                     <td><?php echo $row['total_price']; ?></td>
+                                    <td><?php echo $row['category']; ?></td>
                                     <td><?php echo $row['order_date']; ?></td>
                                     <td id="status-<?php echo $row['orderid']; ?>" class="status-<?php echo strtolower($row['status']); ?>">
                                         <?php echo $row['status']; ?>
@@ -106,7 +132,7 @@ $data = orderDetails();
                                     <td style="display:none;"><?php echo ($row['status'] === 'Pending') ? 1 : 2; ?></td> <!-- StatusSort -->
                                     <td>
                                         <button class="btn btn-primary btn-sm change-status"
-                                            data-order-id="<?php echo $row['orderid']; ?>"
+                                            data-product-id="<?php echo $row['productid']; ?>"
                                             data-current-status="<?php echo $row['status']; ?>">
                                             Change Status
                                         </button>
@@ -129,18 +155,26 @@ $data = orderDetails();
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var table = $('#orderTable').DataTable({
                 paging: true,
                 pageLength: 10,
                 lengthMenu: [5, 10, 25, 50, 100],
                 ordering: true,
                 info: true,
-                order: [[8, 'asc']] // Sort by hidden StatusSort column
+                order: [
+                    [9, 'desc'],
+                    [11, 'asc']
+                ], // First by date DESC, then by status
+                columnDefs: [{
+                    targets: 11,
+                    visible: false,
+                    searchable: false
+                }]
             });
 
-            $(".change-status").click(function () {
-                var orderId = $(this).data("order-id");
+            $(".change-status").click(function() {
+                var productId = $(this).data("product-id");
                 var currentStatus = $(this).data("current-status");
                 var newStatus = (currentStatus === "Pending") ? "Delivered" : "Pending";
 
@@ -148,12 +182,14 @@ $data = orderDetails();
                     url: "../../dbfunctions/update_status.php",
                     method: "POST",
                     data: {
-                        orderid: orderId,
+                        productid: productId,
                         status: newStatus
                     },
-                    success: function (response) {
+                    success: function(response) {
+                        console.log(response);
+
                         if (response === "success") {
-                            var statusCell = $("#status-" + orderId);
+                            var statusCell = $("#status-" + productId);
                             statusCell.text(newStatus);
                             statusCell.removeClass("status-pending status-delivered");
 
@@ -161,16 +197,19 @@ $data = orderDetails();
                             statusCell.addClass(newClass);
 
                             // Update button's data-current-status
-                            $(".change-status[data-order-id='" + orderId + "']").data("current-status", newStatus);
+                            $(".change-status[data-product-id='" + productId + "']").data("current-status", newStatus);
 
                             // Update hidden sort column
                             var sortValue = (newStatus === "Pending") ? 1 : 2;
-                            $("#order-" + orderId + " td:eq(8)").text(sortValue);
+                            $("#order-" + productId + " td:eq(8)").text(sortValue);
 
                             // Redraw table to reapply sort
-                            table.row("#order-" + orderId).invalidate().draw(false);
+                            table.row("#order-" + productId).invalidate().draw(false);
 
-                            Swal.fire("Success", "Order status updated!", "success");
+                            Swal.fire("Success", "Order status updated!", "success")
+                                .then(() => {
+                                    location.reload();
+                                });
                         } else {
                             Swal.fire("Error", "Failed to update status.", "error");
                         }
