@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveChanges'])) {
     }
 
     if ($stmt->execute()) {
-        ob_end_clean(); // Clean the buffer before redirect
-        header("Location: profile_section.php");
+        // ob_end_clean(); // Clean the buffer before redirect
+        echo '<script>window.location.href = "profile_section.php";</script>';
         exit();
     } else {
         $swalType = "error";

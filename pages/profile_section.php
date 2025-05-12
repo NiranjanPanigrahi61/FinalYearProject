@@ -50,7 +50,6 @@ include '../component/user_nav.php';
         <div class="col-md-3 sidebar">
             <a href="?page=myorders" class="<?= ($_GET['page'] ?? 'myprofile') === 'myorders' ? 'active' : '' ?>">📦 My Orders</a>
             <a href="?page=addressbook" class="<?= ($_GET['page'] ?? 'myprofile') === 'addressbook' ? 'active' : '' ?>">🏠 Address Book</a>
-            <a href="?page=managecards" class="<?= ($_GET['page'] ?? 'myprofile') === 'managecards' ? 'active' : '' ?>">💳 Manage Saved Cards</a>
             <a href="?page=myprofile" class="<?= ($_GET['page'] ?? 'myprofile') === 'myprofile' ? 'active' : '' ?>">👤 My Profile</a>
             <a href="?page=accountsettings" class="<?= ($_GET['page'] ?? 'myprofile') === 'accountsettings' ? 'active' : '' ?>">⚙️ Account Settings</a>
             <a href="logout.php" class="text-danger">

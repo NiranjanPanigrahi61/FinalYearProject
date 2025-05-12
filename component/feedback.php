@@ -2,14 +2,17 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Feedback - Bakery Delight</title>
     <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css" />
+
+    <!-- Include jQuery first -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Include SweetAlert2 for alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        /* Custom Button Style */
         .btn-custom {
             background: linear-gradient(45deg, #D02964, #fc8f59);
             color: white;
@@ -26,14 +29,8 @@
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
-
-        .btn-custom:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(240, 144, 94, 0.5);
-        }
     </style>
 </head>
-
 <body>
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -42,26 +39,18 @@
                     <h2 class="mb-4 text-center" style="color: #D02964;">We Value Your Feedback</h2>
                     <h4 class="mb-4 text-center" style="color: #D02964;">Let us know how we can improve!</h4>
 
-                    <!-- Alert Box -->
-                    <div id="formAlert" class="alert alert-danger d-none" role="alert"
-                        style="color: #D02964; background-color: #ffe5ec; border-color: #f7a1b3;">
-                    </div>
-
                     <form id="feedbackForm">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control bg-white" id="name" placeholder="Name"
-                                style="color: #D02964;" />
-                            <label for="name" class="fw-semibold" style="color: #D02964;">Name</label>
+                            <input type="text" id="name" class="form-control bg-white" placeholder="Name" />
+                            <label for="name" style="color: #D02964;">Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control bg-white" id="email" placeholder="Email"
-                                style="color: #D02964;" />
-                            <label for="email" class="fw-semibold" style="color: #D02964;">Email address</label>
+                            <input type="email" id="email" class="form-control bg-white" placeholder="Email" />
+                            <label for="email" style="color: #D02964;">Email</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <textarea class="form-control bg-white" placeholder="Message" id="message"
-                                style="height: 150px; color: #D02964;"></textarea>
-                            <label for="message" class="fw-semibold" style="color: #D02964;">Message</label>
+                            <textarea id="message" class="form-control bg-white" style="height: 150px;" placeholder="Message"></textarea>
+                            <label for="message" style="color: #D02964;">Message</label>
                         </div>
                         <button type="submit" class="btn btn-custom w-100">Send Message</button>
                     </form>
@@ -69,46 +58,62 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS -->
+    <!-- Include Bootstrap JS -->
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
-
-    <!-- Validation Script -->
+    <!-- Your custom script that uses jQuery -->
     <script>
-        document.getElementById("feedbackForm").addEventListener("submit", function (e) {
-            const name = document.getElementById("name").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const message = document.getElementById("message").value.trim();
-            const alertBox = document.getElementById("formAlert");
+        $("#feedbackForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const name = $("#name").val().trim();
+            const email = $("#email").val().trim();
+            const message = $("#message").val().trim();
 
             const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
             const namePattern = /^[a-zA-Z\s'-]+$/;
-            let errors = [];
-
+            // Client-side validation
             if (!namePattern.test(name)) {
-                errors.push("Please enter a valid name (letters only).");
+                Swal.fire('Invalid Name', 'Please enter a valid name.', 'warning');
+                return;
             }
 
             if (!emailPattern.test(email)) {
-                errors.push("Please enter a valid email address.");
+                Swal.fire('Invalid Email', 'Please enter a valid email.', 'warning');
+                return;
             }
 
             if (message.length < 10) {
-                errors.push("Message should be at least 10 characters long.");
+                Swal.fire('Message Too Short', 'Please enter at least 10 characters.', 'warning');
+                return;
             }
 
-            if (errors.length > 0) {
-                e.preventDefault();
-                alertBox.innerHTML = errors.join("<br>");
-                alertBox.classList.remove("d-none");
-            } else {
-                alertBox.classList.add("d-none");
-            }
+            // AJAX request
+            $.ajax({
+                url: "../dbfunctions/feedbackfunction.php",
+                type: "POST",
+                dataType: "json", // <--- ADD THIS
+                data: { name: name, email: email, message: message },
+                success: function (data) {
+                    console.log(data); // You'll now see an object, not a raw string
+
+                    if (data.notLoggedIn) {
+                        Swal.fire('Not Logged In', data.message, 'warning');
+                    } else if (data.success) {
+                        $("#feedbackForm")[0].reset();
+                        Swal.fire('Thank You!', data.message, 'success');
+                    } else {
+                        Swal.fire('Error', data.message || 'An error occurred.', 'error');
+                    }
+                },
+                error: function (xhr, status, err) {
+                    Swal.fire('Error', 'AJAX failed: ' + err, 'error');
+                }
+            });
+
+
         });
     </script>
-
 </body>
 
 </html>
-
 <?php include_once "../component/footer.php"; ?>
