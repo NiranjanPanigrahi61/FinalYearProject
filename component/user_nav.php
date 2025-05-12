@@ -1,5 +1,15 @@
 <?php
+
 include_once "./../config.php";
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if(isset($_SESSION['user_id'])){
+    require_once __DIR__ . '/../dbfunctions/cartFunction.php';  // Correct relative path
+    $data=cartValue();
+}
 ?>
 
 <!DOCTYPE html>
@@ -84,8 +94,11 @@ include_once "./../config.php";
                 <?= isset($_SESSION['user_id']) ? '
                     <ul class="navbar-nav text-center">
                         <li class="nav-item">
-                            <a class="nav-link text-white fw-bold" href="cart.html">
+                            <a class="nav-link text-white fw-bold " href="'.BASE_URL.'pages/cart.php">
                                 <i class="fa-solid fa-cart-shopping text-white p-2 rounded-circle border border-white border-2" style="opacity: 5; transform: none;"></i> 
+                                <span id="cart-count" class="position-absolute translate-middle badge rounded-pill bg-warning" style="font-size: 0.8rem;">
+                                    '.$data.'
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -90,4 +90,22 @@ function userLogin() {
         echo json_encode(["success" => false, "message" => "An error occurred while logging in."]);
     }
 }
+
+function userDetails($userid){
+    global $conn;
+    try{
+        $qry="SELECT username, email, phone FROM user WHERE userid=?";
+        $stmt=$conn->prepare($qry);
+        $stmt->bind_param("i",$userid);
+        $stmt->execute();
+        $res=$stmt->get_result();
+        if($res->num_rows>0){
+            return $res;
+        }else{
+            return false;
+        }
+    }catch(Exception $e){
+        die($e->getMessage());
+    }
+}
 ?>

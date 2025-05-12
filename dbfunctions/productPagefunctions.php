@@ -1,4 +1,6 @@
 <?php 
+
+use Aws\CloudWatch\CloudWatchClient;
 require_once __DIR__.'/dbconnect.php';
 
 // Get products with pagination
@@ -146,5 +148,21 @@ function productDetail($table,$id){
         die($e->getMessage());
     }
 
+}
+function relatedProduct($table){
+    global $conn;
+    try{
+    $qry="SELECT * FROM $table";
+        $stmt=$conn->prepare($qry);
+        $stmt->execute();
+        $res=$stmt->get_result();
+        if($res){
+            return $res;
+        }else{
+            return false;
+        }
+    }catch(Exception $e){
+        die($e->getMessage());
+    }
 }
 ?>

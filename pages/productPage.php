@@ -99,7 +99,7 @@ $categories = category();
                     <?php foreach ($categories as $cat) { ?>
                         <li class="nav-item mx-2">
                             <a class="nav-link <?php echo ($id === $cat) ? 'active fw-bold prod-nav' : ''; ?>"
-                                href="?id=<?php echo $cat; ?>">
+                                href="./productPage.php?id=<?php echo $cat; ?>">
                                 <?php echo ucfirst($cat); ?>
                             </a>
                         </li>
