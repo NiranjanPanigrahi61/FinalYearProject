@@ -213,7 +213,7 @@
 
             // Send OTP via AJAX
             $.ajax({
-                url: "../../mail/sendotp.php",
+                url: "../../mail/sendOtp.php",
                 type: "POST",
                 data: {
                     email: email
@@ -243,7 +243,7 @@
 
         $('#resendOtpBtn').on('click', function() {
             $.ajax({
-                url: "../../mail/sendotp.php",
+                url: "../../mail/sendOtp.php",
                 type: "POST",
                 data: {
                     email: email
@@ -273,7 +273,7 @@
             }
 
             $.ajax({
-                url: "../../mail/verifyotp.php",
+                url: "../../mail/verifyOtp.php",
                 type: "POST",
                 data: {
                     email: email,
